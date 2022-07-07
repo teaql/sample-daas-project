@@ -1,1 +1,1 @@
-../../daas-start-kit/gencode.sh  model.xml all  ./
+../daas-start-kit/gencode.sh  model.xml all  ./
