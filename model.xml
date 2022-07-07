@@ -1,0 +1,37 @@
+<root
+    org="doublechaintech"
+    chinese_name="双链科技"
+    english_name="双链科技">
+
+  <!-- 平台 -->
+  <platform
+      _name="企业员工健康台账"
+      name="双链科技"
+      create_time="createTime()"
+      last_update_time="updateTime()"
+      />
+
+    <order_status
+        _name="健康台账"
+        name="张喜来|刘利|田波|周廷志"
+        
+        age="100"
+        code="A|B|C"
+        platform="platform()"
+        _identified_by="code"
+        _features="status"
+        _showonly="name"
+        _showexclude="code"
+
+    />
+
+    <main_order 
+        name="yes"
+        platform="platform()"
+        status="order_status()"
+        create_time="createTime()"
+        
+    />
+
+</root>
+
