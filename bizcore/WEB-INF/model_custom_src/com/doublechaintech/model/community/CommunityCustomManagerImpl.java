@@ -97,6 +97,11 @@ public class CommunityCustomManagerImpl extends CommunityManagerImpl{
         return Q.kid().executeForList(userContext);
 
     }
+    public Object helloMia001Family(ModelUserContext userContext) throws Exception {
+
+
+        return Q.family().filterByName("Mia's Family0001").selectKidList().executeForList(userContext);
+    }
 
 
 
