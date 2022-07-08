@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="checker" class="com.doublechaintech.model.ModelObjectChecker" scope="prototype"></bean>
+
+	<bean id="communityManagerBase" class="com.doublechaintech.model.community.CommunityManagerImpl"/>
+
+	<bean id="communityManager" class="com.doublechaintech.model.community.CommunityCustomManagerImpl" parent="communityManagerBase" ></bean>
+	
+	<bean id="familyManagerBase" class="com.doublechaintech.model.family.FamilyManagerImpl"/>
+
+	<bean id="familyManager" class="com.doublechaintech.model.family.FamilyManagerImpl" parent="familyManagerBase" ></bean>
+	
+	<bean id="kidManagerBase" class="com.doublechaintech.model.kid.KidManagerImpl"/>
+
+	<bean id="kidManager" class="com.doublechaintech.model.kid.KidManagerImpl" parent="kidManagerBase" ></bean>
+	
+	<bean id="mobileAppManagerBase" class="com.doublechaintech.model.mobileapp.MobileAppManagerImpl"/>
+
+	<bean id="mobileAppManager" class="com.doublechaintech.model.mobileapp.MobileAppCustomManagerImpl" parent="mobileAppManagerBase" ></bean>
+	
+	<bean id="pageManagerBase" class="com.doublechaintech.model.page.PageManagerImpl"/>
+
+	<bean id="pageManager" class="com.doublechaintech.model.page.PageManagerImpl" parent="pageManagerBase" ></bean>
+	
+	<bean id="pageTypeManagerBase" class="com.doublechaintech.model.pagetype.PageTypeManagerImpl"/>
+
+	<bean id="pageTypeManager" class="com.doublechaintech.model.pagetype.PageTypeManagerImpl" parent="pageTypeManagerBase" ></bean>
+	
+	<bean id="slideManagerBase" class="com.doublechaintech.model.slide.SlideManagerImpl"/>
+
+	<bean id="slideManager" class="com.doublechaintech.model.slide.SlideManagerImpl" parent="slideManagerBase" ></bean>
+	
+	<bean id="uiActionManagerBase" class="com.doublechaintech.model.uiaction.UiActionManagerImpl"/>
+
+	<bean id="uiActionManager" class="com.doublechaintech.model.uiaction.UiActionManagerImpl" parent="uiActionManagerBase" ></bean>
+	
+	<bean id="sectionManagerBase" class="com.doublechaintech.model.section.SectionManagerImpl"/>
+
+	<bean id="sectionManager" class="com.doublechaintech.model.section.SectionManagerImpl" parent="sectionManagerBase" ></bean>
+	
+	<bean id="userDomainManagerBase" class="com.doublechaintech.model.userdomain.UserDomainManagerImpl"/>
+
+	<bean id="userDomainManager" class="com.doublechaintech.model.userdomain.UserDomainManagerImpl" parent="userDomainManagerBase" ></bean>
+	
+	<bean id="userAllowListManagerBase" class="com.doublechaintech.model.userallowlist.UserAllowListManagerImpl"/>
+
+	<bean id="userAllowListManager" class="com.doublechaintech.model.userallowlist.UserAllowListManagerImpl" parent="userAllowListManagerBase" ></bean>
+	
+	<bean id="secUserManagerBase" class="com.doublechaintech.model.secuser.CustomSecUserManagerImpl">
+      <property name="cacheService" ref="cacheService" />
+      <property name="storageService" ref="storageService"/>
+      <property name="blockChainAdvancer" ref="blockChainAdvancer"/>
+      <property name="smtpService" ref="smtpService" />
+      <property name="locationService" ref="locationService"/>
+      <property name="treeService" ref="treeService" />
+      <property name="graphService" ref="dummygraphService" />
+      <property name="eventService" ref="dummyEventService" />
+      <property name="messageService" ref="messageService" />
+      <property name="daoGroup" ref="DAOGroup" />
+      <property name="managerGroup" ref="managerGroup" />
+      <property name="checkerBeanName" value="checker" />
+	</bean>
+
+
+	<bean id="secUserManager" class="com.doublechaintech.model.secuser.SecUserCustomManagerImpl" parent="secUserManagerBase" ></bean>
+	
+	<bean id="userAppManagerBase" class="com.doublechaintech.model.userapp.UserAppManagerImpl"/>
+
+	<bean id="userAppManager" class="com.doublechaintech.model.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
+	
+	<bean id="quickLinkManagerBase" class="com.doublechaintech.model.quicklink.QuickLinkManagerImpl"/>
+
+	<bean id="quickLinkManager" class="com.doublechaintech.model.quicklink.QuickLinkManagerImpl" parent="quickLinkManagerBase" ></bean>
+	
+	<bean id="listAccessManagerBase" class="com.doublechaintech.model.listaccess.ListAccessManagerImpl"/>
+
+	<bean id="listAccessManager" class="com.doublechaintech.model.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
+	
+	<bean id="loginHistoryManagerBase" class="com.doublechaintech.model.loginhistory.LoginHistoryManagerImpl"/>
+
+	<bean id="loginHistoryManager" class="com.doublechaintech.model.loginhistory.LoginHistoryManagerImpl" parent="loginHistoryManagerBase" ></bean>
+	
+	<bean id="candidateContainerManagerBase" class="com.doublechaintech.model.candidatecontainer.CandidateContainerManagerImpl"/>
+
+	<bean id="candidateContainerManager" class="com.doublechaintech.model.candidatecontainer.CandidateContainerManagerImpl" parent="candidateContainerManagerBase" ></bean>
+	
+	<bean id="candidateElementManagerBase" class="com.doublechaintech.model.candidateelement.CandidateElementManagerImpl"/>
+
+	<bean id="candidateElementManager" class="com.doublechaintech.model.candidateelement.CandidateElementManagerImpl" parent="candidateElementManagerBase" ></bean>
+	
+	<bean id="wechatWorkappIdentityManagerBase" class="com.doublechaintech.model.wechatworkappidentity.WechatWorkappIdentityManagerImpl"/>
+
+	<bean id="wechatWorkappIdentityManager" class="com.doublechaintech.model.wechatworkappidentity.WechatWorkappIdentityManagerImpl" parent="wechatWorkappIdentityManagerBase" ></bean>
+	
+	<bean id="wechatMiniappIdentityManagerBase" class="com.doublechaintech.model.wechatminiappidentity.WechatMiniappIdentityManagerImpl"/>
+
+	<bean id="wechatMiniappIdentityManager" class="com.doublechaintech.model.wechatminiappidentity.WechatMiniappIdentityManagerImpl" parent="wechatMiniappIdentityManagerBase" ></bean>
+	
+	<bean id="keyPairIdentityManagerBase" class="com.doublechaintech.model.keypairidentity.KeyPairIdentityManagerImpl"/>
+
+	<bean id="keyPairIdentityManager" class="com.doublechaintech.model.keypairidentity.KeyPairIdentityManagerImpl" parent="keyPairIdentityManagerBase" ></bean>
+	
+	<bean id="publicKeyTypeManagerBase" class="com.doublechaintech.model.publickeytype.PublicKeyTypeManagerImpl"/>
+
+	<bean id="publicKeyTypeManager" class="com.doublechaintech.model.publickeytype.PublicKeyTypeManagerImpl" parent="publicKeyTypeManagerBase" ></bean>
+	
+	<bean id="treeNodeManagerBase" class="com.doublechaintech.model.treenode.TreeNodeManagerImpl"/>
+
+	<bean id="treeNodeManager" class="com.doublechaintech.model.treenode.TreeNodeCustomManagerImpl" parent="treeNodeManagerBase" ></bean>
+	
+
+	<bean id="managerGroupBase" class="com.doublechaintech.model.ManagerGroup">
+		<property name="communityManager" ref="communityManager"/>
+		<property name="familyManager" ref="familyManager"/>
+		<property name="kidManager" ref="kidManager"/>
+		<property name="mobileAppManager" ref="mobileAppManager"/>
+		<property name="pageManager" ref="pageManager"/>
+		<property name="pageTypeManager" ref="pageTypeManager"/>
+		<property name="slideManager" ref="slideManager"/>
+		<property name="uiActionManager" ref="uiActionManager"/>
+		<property name="sectionManager" ref="sectionManager"/>
+		<property name="userDomainManager" ref="userDomainManager"/>
+		<property name="userAllowListManager" ref="userAllowListManager"/>
+		<property name="secUserManager" ref="secUserManager"/>
+		<property name="userAppManager" ref="userAppManager"/>
+		<property name="quickLinkManager" ref="quickLinkManager"/>
+		<property name="listAccessManager" ref="listAccessManager"/>
+		<property name="loginHistoryManager" ref="loginHistoryManager"/>
+		<property name="candidateContainerManager" ref="candidateContainerManager"/>
+		<property name="candidateElementManager" ref="candidateElementManager"/>
+		<property name="wechatWorkappIdentityManager" ref="wechatWorkappIdentityManager"/>
+		<property name="wechatMiniappIdentityManager" ref="wechatMiniappIdentityManager"/>
+		<property name="keyPairIdentityManager" ref="keyPairIdentityManager"/>
+		<property name="publicKeyTypeManager" ref="publicKeyTypeManager"/>
+		<property name="treeNodeManager" ref="treeNodeManager"/>
+	</bean>
+	<bean id="managerGroup" parent="managerGroupBase"></bean>
+
+	
+
+ 
+ 
+
+ 
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
