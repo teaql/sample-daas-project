@@ -1,4 +1,5 @@
 package com.doublechaintech.model.search;
+
 import com.doublechaintech.model.BaseEntity;
 import com.doublechaintech.model.Beans;
 
@@ -77,8 +78,3 @@ public class RefinedIdInCriteria<T extends BaseEntity> implements SearchCriteria
     return SearchConfiguration.MODEL_LOCAL.equals(model);
   }
 }
-
-
-
-
-

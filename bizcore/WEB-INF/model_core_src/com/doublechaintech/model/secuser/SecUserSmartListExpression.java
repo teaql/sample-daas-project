@@ -15,10 +15,10 @@ public abstract class SecUserSmartListExpression<T> extends SmartListExpression<
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return SecUserSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return SecUserSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +37,10 @@ public abstract class SecUserSmartListExpression<T> extends SmartListExpression<
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return SecUserSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return SecUserSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

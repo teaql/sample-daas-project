@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import com.doublechaintech.model.BaseEntity;
@@ -17,7 +16,8 @@ public class SimplePropertyCriteria implements SearchCriteria {
     mQueryOperator = pQueryOperator;
     mValue = pValue;
   }
-  public boolean isVersionPropertyCriteria(){
+
+  public boolean isVersionPropertyCriteria() {
     return "version".equals(mProperty);
   }
 
@@ -115,4 +115,3 @@ public class SimplePropertyCriteria implements SearchCriteria {
     }
   }
 }
-

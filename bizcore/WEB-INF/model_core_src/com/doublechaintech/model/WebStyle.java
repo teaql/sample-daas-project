@@ -1,93 +1,72 @@
 package com.doublechaintech.model;
 
-
 public class WebStyle {
 
-    public String backgroundColor;
-    public String color;
+  public String backgroundColor;
+  public String color;
 
+  public String getClassNames() {
+    return classNames;
+  }
 
-    public String getClassNames() {
-        return classNames;
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public WebStyle setNotes(String notes) {
+    this.notes = notes;
+    return this;
+  }
 
-    public WebStyle setNotes(String notes) {
-        this.notes = notes;
-        return this;
-    }
+  public WebStyle setClassNames(String classNames) {
+    this.classNames = classNames;
+    return this;
+  }
 
-    public WebStyle setClassNames(String classNames) {
-        this.classNames = classNames;
-        return this;
-    }
+  public String classNames;
+  public String notes;
 
-    public String classNames;
-    public String notes;
+  public static WebStyle withBackgroundColor(String color) {
+    WebStyle style = new WebStyle();
+    style.setBackgroundColor(color);
+    return style;
+  }
 
-    public static WebStyle withBackgroundColor(String color) {
-        WebStyle style=new WebStyle();
-        style.setBackgroundColor(color);
-        return style;
-    }
+  public WebStyle bindToTarget(BaseEntity baseEntity) {
 
-    public WebStyle bindToTarget(BaseEntity baseEntity){
+    baseEntity.setDynaProp("style", this);
+    return this;
+  }
 
-        baseEntity.setDynaProp("style",this);
-        return this;
+  public static WebStyle withClassNames(String classNames) {
+    WebStyle style = new WebStyle();
+    style.setClassNames(classNames);
+    return style;
+  }
 
-    }
+  // tableRowDisabled tableRowRedFont'
 
-    public static WebStyle withClassNames(String classNames) {
-        WebStyle style=new WebStyle();
-        style.setClassNames(classNames);
-        return style;
-    }
+  public static WebStyle withFontColor(String color) {
+    WebStyle style = new WebStyle();
+    style.setColor(color);
+    return style;
+  }
 
-    //tableRowDisabled tableRowRedFont'
+  public String getBackgroundColor() {
+    return backgroundColor;
+  }
 
-    public static WebStyle withFontColor(String color) {
-        WebStyle style=new WebStyle();
-        style.setColor(color);
-        return style;
-    }
+  public WebStyle setBackgroundColor(String backgroundColor) {
+    this.backgroundColor = backgroundColor;
+    return this;
+  }
 
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
+  public String getColor() {
+    return color;
+  }
 
-    public WebStyle setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
-        return this;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public WebStyle setColor(String color) {
-        this.color = color;
-        return this;
-    }
+  public WebStyle setColor(String color) {
+    this.color = color;
+    return this;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

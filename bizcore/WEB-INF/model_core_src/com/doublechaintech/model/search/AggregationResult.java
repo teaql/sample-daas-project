@@ -22,6 +22,3 @@ public class AggregationResult {
     data = pData;
   }
 }
-
-
-

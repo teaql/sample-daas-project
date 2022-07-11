@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model;
 
 import java.io.BufferedReader;
@@ -15,96 +14,81 @@ import org.springframework.jdbc.core.RowMapper;
 
 public abstract class BaseRowMapper<T> implements RowMapper<T> {
 
-
   protected Class<?> clazz;
-  protected  void setClazz(Class<?> clazz){
-    this.clazz=clazz;
+
+  protected void setClazz(Class<?> clazz) {
+    this.clazz = clazz;
   }
 
-  protected  T constructFromClass(){
+  protected T constructFromClass() {
     try {
       Constructor<?> ctor = clazz.getConstructor();
-      T entity=(T)ctor.newInstance(new Object[]{});
+      T entity = (T) ctor.newInstance(new Object[] {});
       return entity;
     } catch (Exception e) {
       throw new IllegalStateException(e);
     }
   }
 
-	public final T mapRow(ResultSet rs, int rowNumber) throws SQLException {
-      T t = internalMapRow(rs, rowNumber);
-      Beans.dbUtil().cache(t);
-      return t;
-	}
-	protected DateTime convertToDateTime(Date date){
-		DateTime dateTime = new DateTime();
-		dateTime.setTime(date.getTime());
-		return dateTime;
-	}
-	protected Images convertToImages(String dataInDb) {
-		return Images.fromString(dataInDb);
-	}
-	protected abstract T internalMapRow(ResultSet rs, int rowNumber) throws SQLException;
+  public final T mapRow(ResultSet rs, int rowNumber) throws SQLException {
+    T t = internalMapRow(rs, rowNumber);
+    Beans.dbUtil().cache(t);
+    return t;
+  }
 
+  protected DateTime convertToDateTime(Date date) {
+    DateTime dateTime = new DateTime();
+    dateTime.setTime(date.getTime());
+    return dateTime;
+  }
 
-	protected String readFullClob(ResultSet rs, String columnName, int rowNumber) throws IOException, SQLException {
+  protected Images convertToImages(String dataInDb) {
+    return Images.fromString(dataInDb);
+  }
 
-		Clob clobObject = (Clob) rs.getObject(columnName);
-		final StringBuilder sb = new StringBuilder();
+  protected abstract T internalMapRow(ResultSet rs, int rowNumber) throws SQLException;
 
-		final Reader reader = clobObject.getCharacterStream();
-		final BufferedReader br = new BufferedReader(reader);
-		int b = br.read();
+  protected String readFullClob(ResultSet rs, String columnName, int rowNumber)
+      throws IOException, SQLException {
 
-		while (eof() != b) {
-			sb.append((char) b);
-			b = br.read();
-		}
-		br.close();
-		return sb.toString();
+    Clob clobObject = (Clob) rs.getObject(columnName);
+    final StringBuilder sb = new StringBuilder();
 
-	}
-	protected String readPartialClob(ResultSet rs, String columnName, int rowNumber, int lengthLimit) throws IOException, SQLException {
+    final Reader reader = clobObject.getCharacterStream();
+    final BufferedReader br = new BufferedReader(reader);
+    int b = br.read();
 
-		Clob clobObject = (Clob) rs.getObject(columnName);
-		final StringBuilder sb = new StringBuilder();
+    while (eof() != b) {
+      sb.append((char) b);
+      b = br.read();
+    }
+    br.close();
+    return sb.toString();
+  }
 
-		final Reader reader = clobObject.getCharacterStream();
-		final BufferedReader br = new BufferedReader(reader);
-		int b = br.read();
-		int length = 0;
-		while (eof() != b) {
-			sb.append((char) b);
-			length++;
-			if(length >= lengthLimit){
-				break;
-			}
-			b = br.read();
-		}
-		br.close();
-		return sb.toString();
+  protected String readPartialClob(ResultSet rs, String columnName, int rowNumber, int lengthLimit)
+      throws IOException, SQLException {
 
-	}
-	protected final int eof(){
-		return -1;
-	}
+    Clob clobObject = (Clob) rs.getObject(columnName);
+    final StringBuilder sb = new StringBuilder();
 
+    final Reader reader = clobObject.getCharacterStream();
+    final BufferedReader br = new BufferedReader(reader);
+    int b = br.read();
+    int length = 0;
+    while (eof() != b) {
+      sb.append((char) b);
+      length++;
+      if (length >= lengthLimit) {
+        break;
+      }
+      b = br.read();
+    }
+    br.close();
+    return sb.toString();
+  }
+
+  protected final int eof() {
+    return -1;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

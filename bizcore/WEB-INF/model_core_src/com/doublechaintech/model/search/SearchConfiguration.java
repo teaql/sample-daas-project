@@ -12,4 +12,3 @@ public class SearchConfiguration {
     model = pModel;
   }
 }
-

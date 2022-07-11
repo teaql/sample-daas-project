@@ -3,13 +3,13 @@
 
 
 
-=================1.0 Execute Report (Model Time 700101T0800) @Fri Jul 08 16:46:54 CST 2022, 23 objects and 154 fields===========================
+=================1.0 Execute Report (Model Time 700101T0800) @Mon Jul 11 18:17:07 CST 2022, 23 objects and 155 fields===========================
 from file "null"
 community{
 	fields(4){
 		string	id('AB'), verb: false, required: true,type:id, richText: false, features: root,visible_all,string,identifier,entity_base, class: PresentFieldDesc, hash code: 690609858,relationMeta={name=id, features=root,visible_all,string,identifier,entity_base, range_expression=2,64, editor=defaulteditor, type=string, searcheditor=defaulteditor, value=AB, parent=string, ui_ignore=true},comment=null;
 		string	name('Dayuan Community'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -1054041851,relationMeta={name=community.name, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
-		string	address('天府大道1888号'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: 499156556,relationMeta={name=community.address, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
+		string	address('No 1888, Tianfu Ave'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -111835294,relationMeta={name=community.address, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
 		int	version('2147483647'), verb: false, required: true,type:version, richText: false, features: root,visible_all,int,version,entity_base, class: PresentFieldDesc, hash code: -1181725190,relationMeta={name=version, features=root,visible_all,int,version,entity_base, ui_ignore=true, parent=int, type=int, value=2147483647},comment=null;
 	}
 	references field(1){
@@ -34,9 +34,10 @@ family{
 } depth=1; isRoot = false
 
 kid{
-	fields(4){
+	fields(5){
 		string	id('AB'), verb: false, required: true,type:id, richText: false, features: root,visible_all,string,identifier,entity_base, class: PresentFieldDesc, hash code: 690609858,relationMeta={name=id, features=root,visible_all,string,identifier,entity_base, range_expression=2,64, editor=defaulteditor, type=string, searcheditor=defaulteditor, value=AB, parent=string, ui_ignore=true},comment=null;
 		string	name('John|Tom'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -471065675,relationMeta={name=kid.name, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
+		int	age('10'), verb: false, required: true,type:int, richText: false, features: root,visible_all,number,search_between,search_greater_than,search_less_than,int, class: PresentFieldDesc, hash code: -887234325,relationMeta={name=kid.age, features=root,visible_all,number,search_between,search_greater_than,search_less_than,int, editor=numbereditor, parent=number},comment=null;
 		family	family('$(object)'), verb: false, required: true, referenceBy: kidList,type:family, richText: false, features: root,visible_all, class: PresentFieldDesc, hash code: -128929055,relationMeta={name=kid.family, features=root,visible_all},comment=null;
 		int	version('2147483647'), verb: false, required: true,type:version, richText: false, features: root,visible_all,int,version,entity_base, class: PresentFieldDesc, hash code: -1181725190,relationMeta={name=version, features=root,visible_all,int,version,entity_base, ui_ignore=true, parent=int, type=int, value=2147483647},comment=null;
 	}
@@ -524,7 +525,7 @@ community{
 	fields(4){
 		string	id('AB'), verb: false, required: true,type:id, richText: false, features: root,visible_all,string,identifier,entity_base, class: PresentFieldDesc, hash code: 690609858,relationMeta={name=id, features=root,visible_all,string,identifier,entity_base, range_expression=2,64, editor=defaulteditor, type=string, searcheditor=defaulteditor, value=AB, parent=string, ui_ignore=true},comment=null;
 		string	name('Dayuan Community'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -1054041851,relationMeta={name=community.name, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
-		string	address('天府大道1888号'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: 499156556,relationMeta={name=community.address, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
+		string	address('No 1888, Tianfu Ave'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -111835294,relationMeta={name=community.address, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
 		int	version('2147483647'), verb: false, required: true,type:version, richText: false, features: root,visible_all,int,version,entity_base, class: PresentFieldDesc, hash code: -1181725190,relationMeta={name=version, features=root,visible_all,int,version,entity_base, ui_ignore=true, parent=int, type=int, value=2147483647},comment=null;
 	}
 	references field(1){
@@ -549,9 +550,10 @@ family{
 } depth=1; isRoot = false
 
 kid{
-	fields(4){
+	fields(5){
 		string	id('AB'), verb: false, required: true,type:id, richText: false, features: root,visible_all,string,identifier,entity_base, class: PresentFieldDesc, hash code: 690609858,relationMeta={name=id, features=root,visible_all,string,identifier,entity_base, range_expression=2,64, editor=defaulteditor, type=string, searcheditor=defaulteditor, value=AB, parent=string, ui_ignore=true},comment=null;
 		string	name('John|Tom'), verb: false, required: true,type:string, richText: false, features: root,visible_all,string, class: PresentFieldDesc, hash code: -471065675,relationMeta={name=kid.name, features=root,visible_all,string, editor=defaulteditor, searcheditor=defaulteditor},comment=null;
+		int	age('10'), verb: false, required: true,type:int, richText: false, features: root,visible_all,number,search_between,search_greater_than,search_less_than,int, class: PresentFieldDesc, hash code: -887234325,relationMeta={name=kid.age, features=root,visible_all,number,search_between,search_greater_than,search_less_than,int, editor=numbereditor, parent=number},comment=null;
 		family	family('$(object)'), verb: false, required: true, referenceBy: kidList,type:family, richText: false, features: root,visible_all, class: PresentFieldDesc, hash code: -128929055,relationMeta={name=kid.family, features=root,visible_all},comment=null;
 		int	version('2147483647'), verb: false, required: true,type:version, richText: false, features: root,visible_all,int,version,entity_base, class: PresentFieldDesc, hash code: -1181725190,relationMeta={name=version, features=root,visible_all,int,version,entity_base, ui_ignore=true, parent=int, type=int, value=2147483647},comment=null;
 	}

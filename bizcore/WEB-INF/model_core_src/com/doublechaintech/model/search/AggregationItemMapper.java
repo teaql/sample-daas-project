@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import cn.hutool.core.util.StrUtil;
@@ -23,5 +22,3 @@ public class AggregationItemMapper implements RowMapper<AggregationItem> {
     return ret;
   }
 }
-
-

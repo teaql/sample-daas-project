@@ -15,10 +15,10 @@ public abstract class ListAccessSmartListExpression<T> extends SmartListExpressi
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return ListAccessSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return ListAccessSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +37,10 @@ public abstract class ListAccessSmartListExpression<T> extends SmartListExpressi
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return ListAccessSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return ListAccessSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

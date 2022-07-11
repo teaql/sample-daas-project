@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class WechatMiniappIdentitySmartListExpression<T> extends SmartListExpression<T, WechatMiniappIdentity> {
+public abstract class WechatMiniappIdentitySmartListExpression<T>
+    extends SmartListExpression<T, WechatMiniappIdentity> {
   public WechatMiniappIdentityExpression<T> first() {
     return new WechatMiniappIdentityExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class WechatMiniappIdentitySmartListExpression<T> extends SmartL
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return WechatMiniappIdentitySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return WechatMiniappIdentitySmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class WechatMiniappIdentitySmartListExpression<T> extends SmartL
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return WechatMiniappIdentitySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return WechatMiniappIdentitySmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

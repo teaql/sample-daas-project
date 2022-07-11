@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class PublicKeyTypeSmartListExpression<T> extends SmartListExpression<T, PublicKeyType> {
+public abstract class PublicKeyTypeSmartListExpression<T>
+    extends SmartListExpression<T, PublicKeyType> {
   public PublicKeyTypeExpression<T> first() {
     return new PublicKeyTypeExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class PublicKeyTypeSmartListExpression<T> extends SmartListExpre
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return PublicKeyTypeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return PublicKeyTypeSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class PublicKeyTypeSmartListExpression<T> extends SmartListExpre
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return PublicKeyTypeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return PublicKeyTypeSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

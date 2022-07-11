@@ -1,4 +1,5 @@
 package com.doublechaintech.model;
+
 import cn.hutool.core.util.StrUtil;
 import com.terapico.caf.DateTime;
 import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
@@ -116,12 +117,7 @@ public class SQLLogger {
       finalSQL.append(ch);
     }
     String newMethod = getStackTrace();
-    logDebug(
-        timeExpr()
-            + "\t"
-            + alignWithTabSpace(result, 4)
-            + finalSQL.toString()
-            + ";\n");
+    logDebug(timeExpr() + "\t" + alignWithTabSpace(result, 4) + finalSQL.toString() + ";\n");
   }
 
   public static void logDebug(String message) {
@@ -162,7 +158,8 @@ public class SQLLogger {
 
     if (value.getClass().isArray()) {
       Object[] array = (Object[]) value;
-      return Arrays.asList(array).stream().limit(20)
+      return Arrays.asList(array).stream()
+          .limit(20)
           .map(v -> wrapValueInSQL(v))
           .collect(Collectors.joining(","));
     }
@@ -200,7 +197,7 @@ public class SQLLogger {
       // setValue.
       // return setValue.stream().map(v->wrapValueInSQL(v)).collect(Collectors.joining(","));
       return (String)
-              setValue.stream().limit(10).map(v -> wrapValueInSQL(v)).collect(Collectors.joining(","));
+          setValue.stream().limit(10).map(v -> wrapValueInSQL(v)).collect(Collectors.joining(","));
     }
 
     return join("'", value.getClass(), "'");
@@ -240,24 +237,3 @@ public class SQLLogger {
     return stringBuilder.toString();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

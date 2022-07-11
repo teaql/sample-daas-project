@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class CandidateElementSmartListExpression<T> extends SmartListExpression<T, CandidateElement> {
+public abstract class CandidateElementSmartListExpression<T>
+    extends SmartListExpression<T, CandidateElement> {
   public CandidateElementExpression<T> first() {
     return new CandidateElementExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class CandidateElementSmartListExpression<T> extends SmartListEx
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return CandidateElementSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return CandidateElementSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class CandidateElementSmartListExpression<T> extends SmartListEx
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return CandidateElementSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return CandidateElementSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class LoginHistorySmartListExpression<T> extends SmartListExpression<T, LoginHistory> {
+public abstract class LoginHistorySmartListExpression<T>
+    extends SmartListExpression<T, LoginHistory> {
   public LoginHistoryExpression<T> first() {
     return new LoginHistoryExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class LoginHistorySmartListExpression<T> extends SmartListExpres
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return LoginHistorySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return LoginHistorySmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class LoginHistorySmartListExpression<T> extends SmartListExpres
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return LoginHistorySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return LoginHistorySmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

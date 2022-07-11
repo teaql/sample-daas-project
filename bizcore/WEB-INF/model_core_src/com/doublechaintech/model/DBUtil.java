@@ -1,6 +1,5 @@
 package com.doublechaintech.model;
 
-
 import com.doublechaintech.model.cache.CacheOperator;
 import com.doublechaintech.model.cache.NonCacheOperator;
 import com.doublechaintech.model.utils.BeanUtils;
@@ -293,27 +292,27 @@ public class DBUtil implements ApplicationContextAware {
     }
   }
 
-  public  <T extends BaseEntity> T searchExample(Class<T> clazz) {
-      Method searchExample = ReflectionUtils.findMethod(clazz, METHOD_SEARCH_EXAMPLE);
-      try {
-        BaseEntity example = (BaseEntity) searchExample.invoke(clazz);
-        String[] propertyNames = example.getPropertyNames();
-        for (String property: propertyNames){
-          Field field = ReflectionUtils.findField(clazz, "m" + TextUtil.capFirstChar(property));
-          if (field == null){
-            continue;
-          }
-          Class<?> type = field.getType();
-          if (Boolean.TYPE.equals(type)){
-            addIgnoreProperty(example, property);
-          }
+  public <T extends BaseEntity> T searchExample(Class<T> clazz) {
+    Method searchExample = ReflectionUtils.findMethod(clazz, METHOD_SEARCH_EXAMPLE);
+    try {
+      BaseEntity example = (BaseEntity) searchExample.invoke(clazz);
+      String[] propertyNames = example.getPropertyNames();
+      for (String property : propertyNames) {
+        Field field = ReflectionUtils.findField(clazz, "m" + TextUtil.capFirstChar(property));
+        if (field == null) {
+          continue;
         }
-        return (T) example;
-      } catch (Exception e) {
-        e.printStackTrace();
-        return null;
+        Class<?> type = field.getType();
+        if (Boolean.TYPE.equals(type)) {
+          addIgnoreProperty(example, property);
+        }
       }
+      return (T) example;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
     }
+  }
 
   public boolean isEnhanced(BaseEntity baseEntity) {
     Object searchEnhanced =
@@ -1170,7 +1169,8 @@ public class DBUtil implements ApplicationContextAware {
     return namedParameterJdbcTemplate;
   }
 
-  public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate pNamedParameterJdbcTemplate) {
+  public void setNamedParameterJdbcTemplate(
+      NamedParameterJdbcTemplate pNamedParameterJdbcTemplate) {
     namedParameterJdbcTemplate = pNamedParameterJdbcTemplate;
   }
 
@@ -1234,6 +1234,3 @@ public class DBUtil implements ApplicationContextAware {
     }
   }
 }
-
-
-

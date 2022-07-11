@@ -1,67 +1,61 @@
 package com.doublechaintech.model;
+
 import java.util.List;
+
 public class SmartListMetaInfo extends BaseEntity {
 
+  public void setAccessInfo(AccessInfo accessInfo) {
+    this.accessInfo = accessInfo;
+  }
 
+  private AccessInfo accessInfo;
+  static final String ACCESS_INFO = "accessInfo";
 
-	public void setAccessInfo(AccessInfo accessInfo) {
-		this.accessInfo = accessInfo;
-	}
+  public List<KeyValuePair> keyValuePairOf() {
+    List<KeyValuePair> result = super.keyValuePairOf();
+    appendKeyValuePair(result, ACCESS_INFO, this.getAccessInfo());
+    appendKeyValuePair(result, "elementCount", getElementCount());
+    appendKeyValuePair(result, "listInternalName", getListInternalName());
 
+    return result;
+  }
 
-	private AccessInfo accessInfo;
-	static final String ACCESS_INFO="accessInfo";
+  public AccessInfo getAccessInfo() {
 
-	public List<KeyValuePair> keyValuePairOf(){
-		List<KeyValuePair> result =  super.keyValuePairOf();
-		appendKeyValuePair(result,ACCESS_INFO,this.getAccessInfo());
-		appendKeyValuePair(result,"elementCount",getElementCount());
-		appendKeyValuePair(result,"listInternalName",getListInternalName());
+    if (accessInfo != null) {
+      return accessInfo;
+    }
+    AccessInfo defaultAccessInfo = new AccessInfo();
 
-		return result;
-	}
+    defaultAccessInfo.setCreatePermission(true);
+    defaultAccessInfo.setInternalName("defaultAccess");
+    defaultAccessInfo.setReadPermission(true);
+    defaultAccessInfo.setCreatePermission(true);
+    defaultAccessInfo.setDeletePermission(true);
+    defaultAccessInfo.setUpdatePermission(true);
+    defaultAccessInfo.setExecutionPermission(true);
 
-	public AccessInfo getAccessInfo() {
+    return defaultAccessInfo;
+  }
 
+  private static final long serialVersionUID = 1L;
 
-		if(accessInfo!=null) {
-			return accessInfo;
-		}
-		AccessInfo defaultAccessInfo = new AccessInfo();
+  public String getListInternalName() {
+    return listInternalName;
+  }
 
-		defaultAccessInfo.setCreatePermission(true);
-		defaultAccessInfo.setInternalName("defaultAccess");
-		defaultAccessInfo.setReadPermission(true);
-		defaultAccessInfo.setCreatePermission(true);
-		defaultAccessInfo.setDeletePermission(true);
-		defaultAccessInfo.setUpdatePermission(true);
-		defaultAccessInfo.setExecutionPermission(true);
+  public void setListInternalName(String listInternalName) {
+    this.listInternalName = listInternalName;
+  }
 
-		return defaultAccessInfo;
-	}
+  public int getElementCount() {
+    return elementCount;
+  }
 
+  public void setElementCount(int elementCount) {
+    this.elementCount = elementCount;
+  }
 
-	private static final long serialVersionUID = 1L;
-	public String getListInternalName() {
-		return listInternalName;
-	}
-	public void setListInternalName(String listInternalName) {
-		this.listInternalName = listInternalName;
-	}
-
-	public int getElementCount() {
-		return elementCount;
-	}
-	public void setElementCount(int elementCount) {
-		this.elementCount = elementCount;
-	}
-
-
-
-	private String listInternalName;
-	private int elementCount;
-
+  private String listInternalName;
+  private int elementCount;
 }
-
-
-

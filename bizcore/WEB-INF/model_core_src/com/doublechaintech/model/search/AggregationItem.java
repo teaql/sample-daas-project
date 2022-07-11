@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import java.util.HashMap;
@@ -39,4 +38,3 @@ public class AggregationItem {
     return dimensions.get(propertyName);
   }
 }
-

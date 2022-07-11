@@ -74,6 +74,6 @@
 	
 </style>
 <section><h3>孩子(${result.id})</h3><table >
-<tr><td class='th'>名称</td><td >${result.name}</td><td class='th'>家庭</td><td >${result.family.displayName}</td></tr></table>
+<tr><td class='th'>名称</td><td >${result.name}</td><td class='th'>年龄</td><td >${result.age}</td></tr><tr><td class='th'>家庭</td><td >${result.family.displayName}</td><td class='th'></td><td ></td></tr></table>
 </section>
 <section></section>

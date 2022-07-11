@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -20,4 +19,3 @@ public class AggregationGroupByMapper implements RowMapper<Map<String, String>> 
     return ret;
   }
 }
-

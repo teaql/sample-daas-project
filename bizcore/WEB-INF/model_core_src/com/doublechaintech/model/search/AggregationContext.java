@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import java.util.Map;
@@ -32,4 +31,3 @@ public class AggregationContext {
     parameters = pParameters;
   }
 }
-

@@ -27,23 +27,22 @@ public interface SqlFunction {
 
   SqlFunction MONTH =
       (retName, properties) -> {
-          String joinProperty =
-                  Stream.of(properties)
-                          .map(TextUtil::propertyToColumnName)
-                          .map(s -> "date_format(" + s + ", '%Y-%m')")
-                          .collect(Collectors.joining(""));
-          return String.format("%s as %s", joinProperty, retName);
+        String joinProperty =
+            Stream.of(properties)
+                .map(TextUtil::propertyToColumnName)
+                .map(s -> "date_format(" + s + ", '%Y-%m')")
+                .collect(Collectors.joining(""));
+        return String.format("%s as %s", joinProperty, retName);
       };
-    SqlFunction YEAR =
+  SqlFunction YEAR =
       (retName, properties) -> {
-          String joinProperty =
-                  Stream.of(properties)
-                          .map(TextUtil::propertyToColumnName)
-                          .map(s -> "date_format(" + s + ", '%Y')")
-                          .collect(Collectors.joining(""));
-          return String.format("%s as %s", joinProperty, retName);
+        String joinProperty =
+            Stream.of(properties)
+                .map(TextUtil::propertyToColumnName)
+                .map(s -> "date_format(" + s + ", '%Y')")
+                .collect(Collectors.joining(""));
+        return String.format("%s as %s", joinProperty, retName);
       };
 
   String toSql(String retName, String... properties);
 }
-

@@ -36,6 +36,14 @@ SEARCH,VISIBLE_CHILD,ADD,USERSPACE,SEARCHABLE,UPDATE,SAMPLE_DATA,DELETE,PERSISTE
 
 package com.doublechaintech.model.community;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.script.*;
+
+import cn.hutool.script.ScriptUtil;
+import com.doublechaintech.model.SmartList;
+import com.doublechaintech.model.WebResponse;
+import com.doublechaintech.model.family.Family;
 import com.terapico.uccaf.BaseUserContext;
 import com.doublechaintech.model.ModelUserContext;
 import com.doublechaintech.model.search.*;
@@ -83,24 +91,79 @@ public class CommunityCustomManagerImpl extends CommunityManagerImpl{
     }
 
     public Object helloFamilyWithKids(ModelUserContext userContext) throws Exception {
-
-        //userContext.log("hello to " + userContext.getRemoteIP());
-
         return Q.family().selectKidList().executeForList(userContext);
-
     }
+
     public Object helloKids(ModelUserContext userContext) throws Exception {
 
-        //userContext.log("hello to " + userContext.getRemoteIP());
-
-        //return Q.family().selectKidList().executeForList(userContext);
         return Q.kid().executeForList(userContext);
 
     }
+
     public Object helloMia001Family(ModelUserContext userContext) throws Exception {
+        return Q.family().filterByName("Mia's Family0001").selectKidList(
+                Q.kidWithIdField().selectName().selectAge().orderByAgeAscending()
+                        .filterByName(QueryOperator.BEGIN_WITH,"T")
+        ).executeForList(userContext);
+    }
+    public WebResponse helloMia001Family2(ModelUserContext userContext) throws Exception {
+        return WebResponse.fromSmartList(Q.family().filterByName("Mia's Family0001").selectKidList(
+                Q.kidWithIdField().selectName().selectAge().orderByAgeAscending()
+                        .filterByName(QueryOperator.BEGIN_WITH,"T")).executeForList(userContext));
+
+    }
+    public WebResponse helloMia001Family3(ModelUserContext userContext) throws Exception {
+        SmartList<Family> familyList = Q.family()
+                .filterByName("Mia's Family0001").selectKidList(
+                    Q.kidWithIdField().selectName().selectAge().orderByAgeAscending()
+                        //.filterByName(QueryOperator.BEGIN_WITH, "T")
+                            )
+                .executeForList(userContext);
+
+        familyList.forEach(f->{
+            f.getKidList().forEach(k->{
+                k.setDynaProp("pass",true);
+            });
 
 
-        return Q.family().filterByName("Mia's Family0001").selectKidList().executeForList(userContext);
+        });
+        return WebResponse.fromSmartList(familyList);
+
+    }
+
+    public Object helloScript(ModelUserContext userContext) throws Exception {
+
+        ScriptEngineManager manager = new ScriptEngineManager();
+        userContext.log("manager "+manager);
+        ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+        // evaluate JavaScript code that defines an object with one method
+        engine.eval("var obj = new Object()");
+        engine.eval("obj.hello = function(name) { print('Hello, ' + name);return 'hello '+name; }");
+        // expose object defined in the script to the Java application
+        Object obj = engine.get("obj");
+        // create an Invocable object by casting the script engine object
+        Invocable inv = (Invocable) engine;
+
+        // invoke the method named "hello" on the object defined in the script
+        // with "Script Method!" as the argument
+        return inv.invokeMethod(obj, "hello", "Script Method!");
+
+
+        //return Q.family().filterByName("Mia's Family0001").selectKidList().executeForList(userContext);
+    }
+
+    public Object helloScriptHutool(ModelUserContext userContext) throws Exception {
+
+        ScriptUtil.eval("print('Script test!');");
+
+        Map<String,Object> p=new HashMap<>();
+        p.put("p1",1);
+        return ScriptUtil.invoke(
+                "hello = function(name) { return name['p1']*0.008; }",
+                "hello",p);
+
+
     }
 
 

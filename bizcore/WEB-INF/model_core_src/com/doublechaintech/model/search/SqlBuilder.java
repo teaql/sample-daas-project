@@ -50,29 +50,29 @@ public class SqlBuilder {
   }
 
   private static String prepareFullDataSqlForPartition(BaseRequest request, String condition) {
-      String partitionProperty = request.getPartitionProperty();
-      SimpleOrderBy orderBy = request.getOrderBy();
-      String orderBySql = orderBy.toSql();
-      if (ObjectUtil.isEmpty(orderBySql)) {
-        orderBySql = "ORDER BY ID ASC";
-      }
-      if (!ObjectUtil.isEmpty(condition)) {
-        condition = "WHERE " + condition;
-      } else {
-        condition = "";
-      }
-      return StrUtil.format(
-          "SELECT * FROM (SELECT {}, (row_number() over(partition by {} {})) as _rank from {} {}) as t where t._rank >= {} and t._rank < {}",
-          request.getSelects().stream()
-              .map(s -> TextUtil.propertyToColumnName((String) s))
-              .collect(Collectors.joining(",")),
-          TextUtil.propertyToColumnName(partitionProperty),
-          orderBySql,
-          tableName(request),
-          condition,
-          request.getOffset() + 1,
-          request.getOffset() + request.getSize() + 1);
+    String partitionProperty = request.getPartitionProperty();
+    SimpleOrderBy orderBy = request.getOrderBy();
+    String orderBySql = orderBy.toSql();
+    if (ObjectUtil.isEmpty(orderBySql)) {
+      orderBySql = "ORDER BY ID ASC";
     }
+    if (!ObjectUtil.isEmpty(condition)) {
+      condition = "WHERE " + condition;
+    } else {
+      condition = "";
+    }
+    return StrUtil.format(
+        "SELECT * FROM (SELECT {}, (row_number() over(partition by {} {})) as _rank from {} {}) as t where t._rank >= {} and t._rank < {}",
+        request.getSelects().stream()
+            .map(s -> TextUtil.propertyToColumnName((String) s))
+            .collect(Collectors.joining(",")),
+        TextUtil.propertyToColumnName(partitionProperty),
+        orderBySql,
+        tableName(request),
+        condition,
+        request.getOffset() + 1,
+        request.getOffset() + request.getSize() + 1);
+  }
 
   public static String prepareParametersAndCondition(
       BaseRequest pRequest, Map<String, Object> parameters) {
@@ -86,4 +86,3 @@ public class SqlBuilder {
     return "";
   }
 }
-

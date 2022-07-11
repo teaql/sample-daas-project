@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import cn.hutool.core.util.NumberUtil;
@@ -96,6 +95,3 @@ public class RequestIterable<T extends BaseEntity> implements Iterable<T> {
     };
   }
 }
-
-
-

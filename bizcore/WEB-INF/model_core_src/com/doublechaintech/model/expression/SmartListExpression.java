@@ -22,6 +22,7 @@ public abstract class SmartListExpression<T, U extends BaseEntity>
         List<U> list = SmartListExpression.this.eval(p);
         return CollectionUtil.size(list);
       }
+
       @Override
       public T $getRoot() {
         return SmartListExpression.this.$getRoot();
@@ -30,22 +31,22 @@ public abstract class SmartListExpression<T, U extends BaseEntity>
   }
 
   public Expression<T, U> first() {
-   return new Expression<T, U>() {
-     @Override
-     public U eval(T p) {
-       List<U> list = SmartListExpression.this.eval(p);
-       return CollectionUtil.getFirst(list);
-     }
+    return new Expression<T, U>() {
+      @Override
+      public U eval(T p) {
+        List<U> list = SmartListExpression.this.eval(p);
+        return CollectionUtil.getFirst(list);
+      }
 
-     @Override
-     public T $getRoot() {
-       return SmartListExpression.this.$getRoot();
-     }
-   };
+      @Override
+      public T $getRoot() {
+        return SmartListExpression.this.$getRoot();
+      }
+    };
   }
 
   public Expression<T, U> get(int index) {
-      return new Expression<T, U>() {
+    return new Expression<T, U>() {
       @Override
       public U eval(T p) {
         List<U> list = SmartListExpression.this.eval(p);
@@ -66,22 +67,3 @@ public abstract class SmartListExpression<T, U extends BaseEntity>
     };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

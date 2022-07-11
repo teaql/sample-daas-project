@@ -20,4 +20,3 @@ public class DuplicatedFormException extends ErrorMessageException {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }
-

@@ -5,7 +5,8 @@ public class DynamicAttributeRequest {
   private String name;
   private String parentProperty;
 
-  public DynamicAttributeRequest(String propertyName, BaseRequest request, String parentPropertyName) {
+  public DynamicAttributeRequest(
+      String propertyName, BaseRequest request, String parentPropertyName) {
     this.request = request;
     this.name = propertyName;
     this.parentProperty = parentPropertyName;
@@ -35,4 +36,3 @@ public class DynamicAttributeRequest {
     parentProperty = pParentProperty;
   }
 }
-

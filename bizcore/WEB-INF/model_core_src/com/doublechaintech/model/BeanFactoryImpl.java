@@ -1,5 +1,5 @@
-
 package com.doublechaintech.model;
+
 import java.util.Map;
 
 import com.doublechaintech.model.community.Community;
@@ -26,143 +26,97 @@ import com.doublechaintech.model.keypairidentity.KeyPairIdentity;
 import com.doublechaintech.model.publickeytype.PublicKeyType;
 import com.doublechaintech.model.treenode.TreeNode;
 
-public class BeanFactoryImpl{
+public class BeanFactoryImpl {
 
+  public Community createCommunity(Map<String, Object> options) {
+    return new Community();
+  }
 
-	public Community createCommunity(Map<String,Object> options){
-		return new Community();
-	}
+  public Family createFamily(Map<String, Object> options) {
+    return new Family();
+  }
 
+  public Kid createKid(Map<String, Object> options) {
+    return new Kid();
+  }
 
-	public Family createFamily(Map<String,Object> options){
-		return new Family();
-	}
+  public MobileApp createMobileApp(Map<String, Object> options) {
+    return new MobileApp();
+  }
 
+  public Page createPage(Map<String, Object> options) {
+    return new Page();
+  }
 
-	public Kid createKid(Map<String,Object> options){
-		return new Kid();
-	}
+  public PageType createPageType(Map<String, Object> options) {
+    return new PageType();
+  }
 
+  public Slide createSlide(Map<String, Object> options) {
+    return new Slide();
+  }
 
-	public MobileApp createMobileApp(Map<String,Object> options){
-		return new MobileApp();
-	}
+  public UiAction createUiAction(Map<String, Object> options) {
+    return new UiAction();
+  }
 
+  public Section createSection(Map<String, Object> options) {
+    return new Section();
+  }
 
-	public Page createPage(Map<String,Object> options){
-		return new Page();
-	}
+  public UserDomain createUserDomain(Map<String, Object> options) {
+    return new UserDomain();
+  }
 
+  public UserAllowList createUserAllowList(Map<String, Object> options) {
+    return new UserAllowList();
+  }
 
-	public PageType createPageType(Map<String,Object> options){
-		return new PageType();
-	}
+  public SecUser createSecUser(Map<String, Object> options) {
+    return new SecUser();
+  }
 
+  public UserApp createUserApp(Map<String, Object> options) {
+    return new UserApp();
+  }
 
-	public Slide createSlide(Map<String,Object> options){
-		return new Slide();
-	}
+  public QuickLink createQuickLink(Map<String, Object> options) {
+    return new QuickLink();
+  }
 
+  public ListAccess createListAccess(Map<String, Object> options) {
+    return new ListAccess();
+  }
 
-	public UiAction createUiAction(Map<String,Object> options){
-		return new UiAction();
-	}
+  public LoginHistory createLoginHistory(Map<String, Object> options) {
+    return new LoginHistory();
+  }
 
+  public CandidateContainer createCandidateContainer(Map<String, Object> options) {
+    return new CandidateContainer();
+  }
 
-	public Section createSection(Map<String,Object> options){
-		return new Section();
-	}
+  public CandidateElement createCandidateElement(Map<String, Object> options) {
+    return new CandidateElement();
+  }
 
+  public WechatWorkappIdentity createWechatWorkappIdentity(Map<String, Object> options) {
+    return new WechatWorkappIdentity();
+  }
 
-	public UserDomain createUserDomain(Map<String,Object> options){
-		return new UserDomain();
-	}
+  public WechatMiniappIdentity createWechatMiniappIdentity(Map<String, Object> options) {
+    return new WechatMiniappIdentity();
+  }
 
+  public KeyPairIdentity createKeyPairIdentity(Map<String, Object> options) {
+    return new KeyPairIdentity();
+  }
 
-	public UserAllowList createUserAllowList(Map<String,Object> options){
-		return new UserAllowList();
-	}
+  public PublicKeyType createPublicKeyType(Map<String, Object> options) {
+    return new PublicKeyType();
+  }
 
-
-	public SecUser createSecUser(Map<String,Object> options){
-		return new SecUser();
-	}
-
-
-	public UserApp createUserApp(Map<String,Object> options){
-		return new UserApp();
-	}
-
-
-	public QuickLink createQuickLink(Map<String,Object> options){
-		return new QuickLink();
-	}
-
-
-	public ListAccess createListAccess(Map<String,Object> options){
-		return new ListAccess();
-	}
-
-
-	public LoginHistory createLoginHistory(Map<String,Object> options){
-		return new LoginHistory();
-	}
-
-
-	public CandidateContainer createCandidateContainer(Map<String,Object> options){
-		return new CandidateContainer();
-	}
-
-
-	public CandidateElement createCandidateElement(Map<String,Object> options){
-		return new CandidateElement();
-	}
-
-
-	public WechatWorkappIdentity createWechatWorkappIdentity(Map<String,Object> options){
-		return new WechatWorkappIdentity();
-	}
-
-
-	public WechatMiniappIdentity createWechatMiniappIdentity(Map<String,Object> options){
-		return new WechatMiniappIdentity();
-	}
-
-
-	public KeyPairIdentity createKeyPairIdentity(Map<String,Object> options){
-		return new KeyPairIdentity();
-	}
-
-
-	public PublicKeyType createPublicKeyType(Map<String,Object> options){
-		return new PublicKeyType();
-	}
-
-
-	public TreeNode createTreeNode(Map<String,Object> options){
-		return new TreeNode();
-	}
-
-
-
-
-
+  public TreeNode createTreeNode(Map<String, Object> options) {
+    return new TreeNode();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

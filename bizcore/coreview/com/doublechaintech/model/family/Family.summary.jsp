@@ -80,8 +80,8 @@
 <section><h3>孩子</h3>
 <table><tr>
 <tr>
-<th>ID</th><th>名称</th><th>家庭</th></tr>	<c:forEach items="${result.kidList}" var="item">
+<th>ID</th><th>名称</th><th>年龄</th><th>家庭</th></tr>	<c:forEach items="${result.kidList}" var="item">
 	<tr>
-<td>${item.id}</td><td>${item.name}</td><td>${item.family.displayName}</td></tr></c:forEach></table>
+<td>${item.id}</td><td>${item.name}</td><td>${item.age}</td><td>${item.family.displayName}</td></tr></c:forEach></table>
 </section>
 </c:if></section>

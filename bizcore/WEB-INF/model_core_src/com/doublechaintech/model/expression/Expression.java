@@ -19,4 +19,3 @@ public interface Expression<E, T> {
     return cn.hutool.core.util.ObjectUtil.isEmpty(eval());
   }
 }
-

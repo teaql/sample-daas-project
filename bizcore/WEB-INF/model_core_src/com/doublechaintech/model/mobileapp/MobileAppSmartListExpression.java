@@ -15,10 +15,10 @@ public abstract class MobileAppSmartListExpression<T> extends SmartListExpressio
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return MobileAppSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return MobileAppSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +37,10 @@ public abstract class MobileAppSmartListExpression<T> extends SmartListExpressio
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return MobileAppSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return MobileAppSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

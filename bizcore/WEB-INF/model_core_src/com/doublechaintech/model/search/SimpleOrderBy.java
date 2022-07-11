@@ -1,4 +1,3 @@
-
 package com.doublechaintech.model.search;
 
 import com.terapico.utils.TextUtil;
@@ -29,6 +28,3 @@ public class SimpleOrderBy implements OrderBy {
     properties.putIfAbsent(property, asc);
   }
 }
-
-
-

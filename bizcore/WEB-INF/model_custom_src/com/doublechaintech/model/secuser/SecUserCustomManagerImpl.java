@@ -1,5 +1,3 @@
-
-
 /*
 
 SEARCH,VISIBLE_CHILD,ADD,SEARCHABLE,UPDATE,SAMPLE_DATA,DELETE,PERSISTENCE,VIEWDETAIL,CUSTOM_MANAGER,ACTION,EXCEL_VIEW,ADMINUI,VISIBLE_PARENT
@@ -33,19 +31,13 @@ SEARCH,VISIBLE_CHILD,ADD,SEARCHABLE,UPDATE,SAMPLE_DATA,DELETE,PERSISTENCE,VIEWDE
 
 */
 
-
 package com.doublechaintech.model.secuser;
+
 import java.util.Date;
 import com.terapico.uccaf.BaseUserContext;
 import com.doublechaintech.model.ModelUserContext;
 
-public class SecUserCustomManagerImpl extends CustomSecUserManagerImpl{
-
-
-
-
-
-}
+public class SecUserCustomManagerImpl extends CustomSecUserManagerImpl {}
 
 /*
 
@@ -81,5 +73,3 @@ public class SecUserCustomManagerImpl extends CustomSecUserManagerImpl{
 
 
 */
-
-

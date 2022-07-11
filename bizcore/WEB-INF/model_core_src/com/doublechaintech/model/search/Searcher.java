@@ -32,12 +32,12 @@ public class Searcher {
     return (List<AggregationResult>) object;
   }
 
-  public static Long valueToLong(Object value){
+  public static Long valueToLong(Object value) {
 
-    if(!(value instanceof Number)){
+    if (!(value instanceof Number)) {
       return 0L;
     }
-    Number numberValue=(Number)value;
+    Number numberValue = (Number) value;
     return numberValue.longValue();
   }
 
@@ -59,7 +59,9 @@ public class Searcher {
       return 0L;
     }
     Long count =
-        result.getData().stream().mapToLong(item -> valueToLong(item.getValues().get("count"))).sum();
+        result.getData().stream()
+            .mapToLong(item -> valueToLong(item.getValues().get("count")))
+            .sum();
 
     smartList.setTotalCount(count.intValue());
     return count;
@@ -69,7 +71,6 @@ public class Searcher {
       Object userContext, BaseRequest<T> pRequest) {
     BaseEntity bean = search(userContext, pRequest);
     return assignCountValue((SmartList) bean);
-
   }
 
   public static <T extends BaseEntity> Stream<T> searchAsStream(
@@ -91,9 +92,9 @@ public class Searcher {
     Method searchMethod =
         ReflectUtil.getMethodByName(manager.getClass(), "search" + internalType + "List");
     try {
-        SmartList<T> resultList = (SmartList<T>)searchMethod.invoke(manager, userContext, pRequest);
-        assignCountValue(resultList);
-        return  resultList;
+      SmartList<T> resultList = (SmartList<T>) searchMethod.invoke(manager, userContext, pRequest);
+      assignCountValue(resultList);
+      return resultList;
     } catch (Exception pE) {
       throw ExceptionUtil.wrapRuntime(ExceptionUtil.unwrap(pE));
     }
@@ -174,14 +175,14 @@ public class Searcher {
         (k, v) -> {
           k = k.substring(v.getInternalType().length());
           v.select(k);
-          if (v.hasLimit()){
+          if (v.hasLimit()) {
             v.setPartitionProperty(k);
           }
           v.doAddSearchCriteria(new SimplePropertyCriteria(k, QueryOperator.IN, list));
           List<BaseEntity> children = search(pRequest.getUserContext(), v);
           for (BaseEntity child : children) {
             BaseEntity baseEntity = (BaseEntity) child.propertyOf(k);
-            if(baseEntity == null){
+            if (baseEntity == null) {
               continue;
             }
             T t = map.get(baseEntity.getId());
@@ -216,6 +217,3 @@ public class Searcher {
     return CollectionUtil.getFirst(aggregations);
   }
 }
-
-
-

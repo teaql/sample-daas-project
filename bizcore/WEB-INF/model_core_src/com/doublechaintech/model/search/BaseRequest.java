@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   private Set<String> selects = new LinkedHashSet<>();
   private List<SearchCriteria> searchCriteriaList = new ArrayList<>();
@@ -31,35 +30,38 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   private Object userContext;
   private String model;
   private Class<?> clazz;
-  protected void overrideResultByClass(Class<?> clazz){
-    this.clazz=clazz;
+
+  protected void overrideResultByClass(Class<?> clazz) {
+    this.clazz = clazz;
   }
-  public Class<?> getClazz(){
+
+  public Class<?> getClazz() {
     return this.clazz;
   }
 
   public void doAddSearchCriteria(SearchCriteria pSearchCriteria) {
 
-    if(pSearchCriteria instanceof SimplePropertyCriteria){
-      SimplePropertyCriteria spc=(SimplePropertyCriteria)pSearchCriteria;
-      if(spc.isVersionPropertyCriteria()){
-        //should remove all version
-       removeAllVersionCriteria();
+    if (pSearchCriteria instanceof SimplePropertyCriteria) {
+      SimplePropertyCriteria spc = (SimplePropertyCriteria) pSearchCriteria;
+      if (spc.isVersionPropertyCriteria()) {
+        // should remove all version
+        removeAllVersionCriteria();
       }
     }
 
-     searchCriteriaList.add(pSearchCriteria);
+    searchCriteriaList.add(pSearchCriteria);
   }
-  public void removeAllVersionCriteria(){
+
+  public void removeAllVersionCriteria() {
     Iterator<SearchCriteria> it = searchCriteriaList.iterator();
     while (it.hasNext()) {
 
       SearchCriteria sc = it.next();
-      if(!(sc instanceof SimplePropertyCriteria)){
+      if (!(sc instanceof SimplePropertyCriteria)) {
         continue;
       }
-      SimplePropertyCriteria spc=(SimplePropertyCriteria)sc;
-      if(!spc.isVersionPropertyCriteria()){
+      SimplePropertyCriteria spc = (SimplePropertyCriteria) sc;
+      if (!spc.isVersionPropertyCriteria()) {
         continue;
       }
       // Do something
@@ -68,7 +70,7 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   }
 
   public BaseRequest addJsonLimiter(JsonNode jsonNode) {
-    if(jsonNode==null){
+    if (jsonNode == null) {
       return this;
     }
 
@@ -127,7 +129,7 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
 
   protected void addSingleJsonOrderBy(JsonNode jsonValueNode) {
     String field = jsonValueNode.get("field").asText();
-    if(!isOneOfSelfField(field)){
+    if (!isOneOfSelfField(field)) {
       return;
     }
     Boolean useAsc = jsonValueNode.get("useAsc").booleanValue();
@@ -136,7 +138,7 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   }
 
   public void addJsonOrderBy(JsonNode jsonNode) {
-    if(jsonNode==null){
+    if (jsonNode == null) {
       return;
     }
 
@@ -186,7 +188,6 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   }
 
   public abstract String getInternalType();
-
 
   public BaseRequest<T> select(String... names) {
     if (names == null) {
@@ -537,7 +538,7 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
   }
 
   public void addJsonFilter(JsonNode jsonNode) {
-    if(jsonNode==null){
+    if (jsonNode == null) {
       return;
     }
     Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
@@ -627,31 +628,29 @@ public abstract class BaseRequest<T extends BaseEntity> implements Cloneable {
     dynamicAttributes = pDynamicAttributes;
   }
 
-  public boolean isEmptyParam(Object param){
-      if (ObjectUtil.isEmpty(param)){
-        return true;
-      }
+  public boolean isEmptyParam(Object param) {
+    if (ObjectUtil.isEmpty(param)) {
+      return true;
+    }
 
-      if (ArrayUtil.isArray(param)){
-        int length = ArrayUtil.length(param);
-        for (int i = 0; i <length; i ++){
-          Object o = ArrayUtil.get(param, i);
-          if (o != null){
-            return false;
-          }
+    if (ArrayUtil.isArray(param)) {
+      int length = ArrayUtil.length(param);
+      for (int i = 0; i < length; i++) {
+        Object o = ArrayUtil.get(param, i);
+        if (o != null) {
+          return false;
         }
-        return true;
       }
-      return false;
+      return true;
     }
+    return false;
+  }
 
-    public SmartList<T> executeForList(Object ctx){
-      return Searcher.search(ctx, this);
-    }
+  public SmartList<T> executeForList(Object ctx) {
+    return Searcher.search(ctx, this);
+  }
 
-    public T execute(Object ctx){
-      return Searcher.searchOne(ctx, this);
-    }
+  public T execute(Object ctx) {
+    return Searcher.searchOne(ctx, this);
+  }
 }
-
-

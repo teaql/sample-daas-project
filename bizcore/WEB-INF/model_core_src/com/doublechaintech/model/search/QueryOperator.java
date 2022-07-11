@@ -1,6 +1,5 @@
 package com.doublechaintech.model.search;
 
-
 public enum QueryOperator {
   /** 等于,如fieldName = 5 */
   EQUAL(" = ", "", ""),
@@ -52,19 +51,19 @@ public enum QueryOperator {
     this.setPrefix(prefix);
     this.setSuffix(suffix);
   }
-  static final String  IS_NULL_EXPR="__is_null__";
-  static final String  IS_NOT_NULL_EXPR="__is_not_null__";
 
-  public static QueryOperator operatorByValue(String value){
+  static final String IS_NULL_EXPR = "__is_null__";
+  static final String IS_NOT_NULL_EXPR = "__is_not_null__";
 
-    if(IS_NULL_EXPR.equalsIgnoreCase(value)){
+  public static QueryOperator operatorByValue(String value) {
+
+    if (IS_NULL_EXPR.equalsIgnoreCase(value)) {
       return IS_NULL;
     }
-    if(IS_NOT_NULL_EXPR.equalsIgnoreCase(value)){
+    if (IS_NOT_NULL_EXPR.equalsIgnoreCase(value)) {
       return IS_NOT_NULL;
     }
     return null;
-
   }
 
   public String getOperator() {
@@ -108,6 +107,3 @@ public enum QueryOperator {
     return this == IN || this == NOT_IN || this == BETWEEN;
   }
 }
-
-
-

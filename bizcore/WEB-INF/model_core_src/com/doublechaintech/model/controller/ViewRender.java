@@ -22,6 +22,7 @@ import org.springframework.beans.factory.BeanNameAware;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
+
 public abstract class ViewRender extends ModelCheckerManager implements BeanNameAware {
 
   public static final String FORM = "form";
@@ -45,13 +46,12 @@ public abstract class ViewRender extends ModelCheckerManager implements BeanName
     beanName = pBeanName;
   }
 
-  public Object view(CustomModelUserContextImpl ctx, Object data) throws Exception{
+  public Object view(CustomModelUserContextImpl ctx, Object data) throws Exception {
     if (data == null) {
       return null;
     }
 
-    Method showPop =
-        ReflectUtil.getMethodByName(getTemplateRender().getClass(), "showPop");
+    Method showPop = ReflectUtil.getMethodByName(getTemplateRender().getClass(), "showPop");
     if (showPop != null) {
       Object o = ReflectUtil.invoke(getTemplateRender(), showPop, ctx, data);
       if (o != null) {
@@ -75,7 +75,7 @@ public abstract class ViewRender extends ModelCheckerManager implements BeanName
     return page;
   }
 
-private void renderAsList(
+  private void renderAsList(
       CustomModelUserContextImpl ctx, Object page, EntityMeta meta, Object data) {
     addListClass(ctx, page, meta, data);
     addPageTitle(ctx, page, meta, data);
@@ -107,13 +107,13 @@ private void renderAsList(
   private Object buildItemOfList(
       CustomModelUserContextImpl ctx, PropertyMeta fieldMeta, Object candidateItem, Object data) {
     boolean noCandidateMapping = getBoolean(fieldMeta, "candidate-without-mapping", false);
-    if (noCandidateMapping){
+    if (noCandidateMapping) {
       return buildItemOfListDirectly(ctx, fieldMeta, candidateItem, data);
     }
     Map<String, Object> ret = new HashMap<>();
     String idProp = getCandidateProperty(ctx, fieldMeta, "id");
     Object idPropertyValue = getCandidateValue(ctx, candidateItem, idProp);
-    if (ObjectUtil.isEmpty(candidateItem)){
+    if (ObjectUtil.isEmpty(candidateItem)) {
       return null;
     }
     setValue(ret, "id", idPropertyValue);
@@ -132,42 +132,48 @@ private void renderAsList(
           addValue(
               candidateItem,
               "actionList",
-              buildSelectAction(ctx, data, (String) value, (String) fieldMeta.get("name"), idPropertyValue));
+              buildSelectAction(
+                  ctx, data, (String) value, (String) fieldMeta.get("name"), idPropertyValue));
         });
     return ret;
   }
 
-
-   private Object buildItemOfListDirectly(CustomModelUserContextImpl ctx, PropertyMeta meta, Object candidate, Object data) {
-      Map<String, Object> mapping = BeanUtil.beanToMap(candidate);
-      Map<String, Object> ret = new HashMap<>();
-      mapping.forEach((k, v) -> {
-        if ("actionList".equals(k)){
-          if (v == null){
+  private Object buildItemOfListDirectly(
+      CustomModelUserContextImpl ctx, PropertyMeta meta, Object candidate, Object data) {
+    Map<String, Object> mapping = BeanUtil.beanToMap(candidate);
+    Map<String, Object> ret = new HashMap<>();
+    mapping.forEach(
+        (k, v) -> {
+          if ("actionList".equals(k)) {
+            if (v == null) {
+              return;
+            }
+            Iterable l = (Iterable) v;
+            for (Object action : l) {
+              addValue(
+                  ret,
+                  "actionList",
+                  buildSelectAction(
+                      ctx,
+                      data,
+                      String.valueOf(action),
+                      (String) meta.get("name"),
+                      mapping.get("id")));
+            }
             return;
           }
-          Iterable l = (Iterable) v;
-          for(Object action: l){
-            addValue(
-                    ret,
-                    "actionList",
-                    buildSelectAction(
-                            ctx, data, String.valueOf(action), (String) meta.get("name"), mapping.get("id")));
+
+          char c = k.charAt(0);
+          if (!CharUtil.isLetter(c)) {
+            addValue(ret, "infoList", MapUtil.put("title", k).put("value", v).into_map());
+            addValue(ret, "infoList", null);
+          } else {
+            setValue(ret, k, v);
           }
-          return;
-        }
+        });
 
-        char c = k.charAt(0);
-        if (!CharUtil.isLetter(c)){
-          addValue(ret, "infoList", MapUtil.put("title", k).put("value", v).into_map());
-          addValue(ret, "infoList", null);
-        }else{
-          setValue(ret, k, v);
-        }
-      });
-
-      return ret;
-    }
+    return ret;
+  }
 
   private void setListMeta(
       CustomModelUserContextImpl ctx, Object page, BaseMeta meta, List candidates, Object data) {
@@ -191,8 +197,7 @@ private void renderAsList(
     return Beans.getBean("templateRender");
   }
 
-  private void invokeBeforeView(
-          CustomModelUserContextImpl pCtx, Object pData) {
+  private void invokeBeforeView(CustomModelUserContextImpl pCtx, Object pData) {
     Object bean = Beans.getBean(ClassUtil.loadClass(pData.getClass().getName() + "Processor"));
     ReflectUtil.invoke(bean, "beforeView", pCtx, pData);
   }
@@ -210,16 +215,16 @@ private void renderAsList(
   }
 
   private void addRequestId(CustomModelUserContextImpl ctx, Object page) {
-      Object defaultGroup = ensureFormGroup(page, "default");
-      addValue(
-          defaultGroup,
-          "fieldList",
-          MapUtil.put("name", "_req")
-              .put("label", "_req")
-              .put("type", "text")
-              .putIf("value", IdUtil.fastSimpleUUID())
-              .put("hidden", true)
-              .into_map());
+    Object defaultGroup = ensureFormGroup(page, "default");
+    addValue(
+        defaultGroup,
+        "fieldList",
+        MapUtil.put("name", "_req")
+            .put("label", "_req")
+            .put("type", "text")
+            .putIf("value", IdUtil.fastSimpleUUID())
+            .put("hidden", true)
+            .into_map());
   }
 
   private void addFormFields(
@@ -247,93 +252,104 @@ private void renderAsList(
     Object group = ensureFormGroup(page, groupName);
 
     Object formField = createFormField(ctx, meta, fieldName, fieldMeta, data);
-    if(formField == null){
+    if (formField == null) {
       return;
     }
     addValue(group, "fieldList", formField);
   }
 
   private Object createFormField(
-       CustomModelUserContextImpl ctx,
-       EntityMeta pMeta,
-       String pFieldName,
-       PropertyMeta pFieldMeta,
-       Object pData) {
-     Object fieldValue = getFieldValue(pData, pFieldName, pFieldMeta);
-     Boolean ignoreIfNull = getBoolean(pFieldMeta, "ignore-if-null", false);
-     if (ignoreIfNull && fieldValue == null) {
-       return null;
-     }
-     Object currentFieldValue = format(ctx, pFieldMeta, fieldValue);
-     List candidates = prepareCandidates(ctx, pMeta, pFieldMeta, pData);
-     Object uiField =
-         MapUtil.put("name", pFieldName)
-             .put("label", pFieldMeta.getStr("zh_CN", pFieldName))
-             .put(
-                 "type",
-                 pFieldMeta.getStr(
-                     "ui-type", defaultFormFieldType(ctx, pFieldMeta, currentFieldValue)))
-             .putIf("value", currentFieldValue)
-             .into_map();
-     if(getBoolean(pFieldMeta, "no_label", false)) {
-       setValue(uiField, "label", null);
-     }
+      CustomModelUserContextImpl ctx,
+      EntityMeta pMeta,
+      String pFieldName,
+      PropertyMeta pFieldMeta,
+      Object pData) {
+    Object fieldValue = getFieldValue(pData, pFieldName, pFieldMeta);
+    Boolean ignoreIfNull = getBoolean(pFieldMeta, "ignore-if-null", false);
+    if (ignoreIfNull && fieldValue == null) {
+      return null;
+    }
+    Object currentFieldValue = format(ctx, pFieldMeta, fieldValue);
+    List candidates = prepareCandidates(ctx, pMeta, pFieldMeta, pData);
+    Object uiField =
+        MapUtil.put("name", pFieldName)
+            .put("label", pFieldMeta.getStr("zh_CN", pFieldName))
+            .put(
+                "type",
+                pFieldMeta.getStr(
+                    "ui-type", defaultFormFieldType(ctx, pFieldMeta, currentFieldValue)))
+            .putIf("value", currentFieldValue)
+            .into_map();
+    if (getBoolean(pFieldMeta, "no_label", false)) {
+      setValue(uiField, "label", null);
+    }
 
-     if (candidates != null) {
-       candidates = CollectionUtil.sub(candidates, 0, getCandidateLimit(pFieldMeta));
-       List mappingCandidates =
-           (List)
-               candidates.stream()
-                   .map(c -> buildCandidate(ctx, pFieldMeta, c, currentFieldValue))
-                   .collect(Collectors.toList());
+    if (candidates != null) {
+      candidates = CollectionUtil.sub(candidates, 0, getCandidateLimit(pFieldMeta));
+      List mappingCandidates =
+          (List)
+              candidates.stream()
+                  .map(c -> buildCandidate(ctx, pFieldMeta, c, currentFieldValue))
+                  .collect(Collectors.toList());
 
-       renderCandidateValues(ctx, pFieldMeta, fieldValue, candidates, mappingCandidates, uiField);
-     }
-     renderFieldValue(ctx, uiField, pMeta, pFieldMeta, fieldValue);
-     buildFieldActions(ctx, uiField, pMeta, pFieldMeta, pData);
-     setUIPassThrough(pFieldMeta, uiField);
-     return uiField;
-   }
+      renderCandidateValues(ctx, pFieldMeta, fieldValue, candidates, mappingCandidates, uiField);
+    }
+    renderFieldValue(ctx, uiField, pMeta, pFieldMeta, fieldValue);
+    buildFieldActions(ctx, uiField, pMeta, pFieldMeta, pData);
+    setUIPassThrough(pFieldMeta, uiField);
+    return uiField;
+  }
 
-   private void renderCandidateValues(
-       CustomModelUserContextImpl ctx, PropertyMeta pFieldMeta, Object pFieldValue, List candidates, List mappingCandidates, Object uiField) {
-     String template = getCandidateProperty(ctx, pFieldMeta, TEMPLATE, null);
-     if (template != null) {
-       Method templateRender =
-         ReflectUtil.getMethodByName(getTemplateRender().getClass(), template);
-       if (templateRender == null) {
-         return;
-       }
-       ReflectUtil.invoke(getTemplateRender(), templateRender, ctx, pFieldMeta, uiField, pFieldValue, candidates, mappingCandidates);
-       return;
-     }
-     String candidateContainer =
-         getCandidateProperty(ctx, pFieldMeta, "$container", "candidateValues");
-     setValue(uiField, candidateContainer, null);
-     mappingCandidates.forEach(
-         candidate -> {
-           addValue(uiField, candidateContainer, candidate);
-         });
-   }
+  private void renderCandidateValues(
+      CustomModelUserContextImpl ctx,
+      PropertyMeta pFieldMeta,
+      Object pFieldValue,
+      List candidates,
+      List mappingCandidates,
+      Object uiField) {
+    String template = getCandidateProperty(ctx, pFieldMeta, TEMPLATE, null);
+    if (template != null) {
+      Method templateRender = ReflectUtil.getMethodByName(getTemplateRender().getClass(), template);
+      if (templateRender == null) {
+        return;
+      }
+      ReflectUtil.invoke(
+          getTemplateRender(),
+          templateRender,
+          ctx,
+          pFieldMeta,
+          uiField,
+          pFieldValue,
+          candidates,
+          mappingCandidates);
+      return;
+    }
+    String candidateContainer =
+        getCandidateProperty(ctx, pFieldMeta, "$container", "candidateValues");
+    setValue(uiField, candidateContainer, null);
+    mappingCandidates.forEach(
+        candidate -> {
+          addValue(uiField, candidateContainer, candidate);
+        });
+  }
 
-   public void renderFieldValue(
-       CustomModelUserContextImpl ctx,
-       Object uiField,
-       EntityMeta pMeta,
-       PropertyMeta pFieldMeta,
-       Object fieldValue) {
-     String template = getStr(pFieldMeta, TEMPLATE, null);
-     if (template != null) {
-       Method templateRender =
-         ReflectUtil.getMethodByName(getTemplateRender().getClass(), template);
-       if (templateRender == null) {
-         return;
-       }
-       ReflectUtil.invoke(getTemplateRender(), templateRender, ctx, pFieldMeta, uiField, fieldValue);
-     }
-   }
+  public void renderFieldValue(
+      CustomModelUserContextImpl ctx,
+      Object uiField,
+      EntityMeta pMeta,
+      PropertyMeta pFieldMeta,
+      Object fieldValue) {
+    String template = getStr(pFieldMeta, TEMPLATE, null);
+    if (template != null) {
+      Method templateRender = ReflectUtil.getMethodByName(getTemplateRender().getClass(), template);
+      if (templateRender == null) {
+        return;
+      }
+      ReflectUtil.invoke(getTemplateRender(), templateRender, ctx, pFieldMeta, uiField, fieldValue);
+    }
+  }
 
-   private Object getFieldValue(Object data, String fieldName, PropertyMeta meta) {
+  private Object getFieldValue(Object data, String fieldName, PropertyMeta meta) {
     if (data == null) {
       return null;
     }
@@ -361,9 +377,9 @@ private void renderAsList(
     }
 
     Object newV;
-    if (property.startsWith("$")){
+    if (property.startsWith("$")) {
       newV = ReflectUtil.invoke(this, property.substring(1), data);
-    }else{
+    } else {
       newV = getProperty(data, property);
     }
 
@@ -371,7 +387,11 @@ private void renderAsList(
   }
 
   private void buildFieldActions(
-      CustomModelUserContextImpl ctx, Object field, EntityMeta meta, PropertyMeta fieldMeta, Object pData) {
+      CustomModelUserContextImpl ctx,
+      Object field,
+      EntityMeta meta,
+      PropertyMeta fieldMeta,
+      Object pData) {
     fieldMeta.forEach(
         (k, value) -> {
           String key = k;
@@ -385,26 +405,29 @@ private void renderAsList(
               field,
               StrUtil.removeSuffix(
                   StrUtil.removePrefix(key, UI_ATTRIBUTE_PREFIX), UI_FIELD_ACTION_SUFFIX),
-              createAction(pData, (String)value));
+              createAction(pData, (String) value));
         });
   }
 
   private Object buildCandidate(
-        CustomModelUserContextImpl ctx, PropertyMeta meta, Object candidate, Object currentValue) {
-      Map<String, Object> ret = new HashMap<>();
-      String idProp = getCandidateProperty(ctx, meta, "id");
-      Object idPropertyValue = getCandidateValue(ctx, candidate, idProp);
-      Object currentIdPropertyValue = getCandidateValue(ctx, currentValue, idProp);
-      setValue(ret, "id", idPropertyValue);
-      if (currentIdPropertyValue != null && getBoolean(meta, "candidate_$select", true)) {
-        setValue(ret, "selected", ObjectUtil.equals(idPropertyValue, currentIdPropertyValue));
-      }
-      addCandidateCommonProperty(ctx, meta, ret, candidate);
-      return ret;
+      CustomModelUserContextImpl ctx, PropertyMeta meta, Object candidate, Object currentValue) {
+    Map<String, Object> ret = new HashMap<>();
+    String idProp = getCandidateProperty(ctx, meta, "id");
+    Object idPropertyValue = getCandidateValue(ctx, candidate, idProp);
+    Object currentIdPropertyValue = getCandidateValue(ctx, currentValue, idProp);
+    setValue(ret, "id", idPropertyValue);
+    if (currentIdPropertyValue != null && getBoolean(meta, "candidate_$select", true)) {
+      setValue(ret, "selected", ObjectUtil.equals(idPropertyValue, currentIdPropertyValue));
+    }
+    addCandidateCommonProperty(ctx, meta, ret, candidate);
+    return ret;
   }
 
   private void addCandidateCommonProperty(
-      CustomModelUserContextImpl ctx, PropertyMeta meta, Object uiCandidate, Object candidateValue) {
+      CustomModelUserContextImpl ctx,
+      PropertyMeta meta,
+      Object uiCandidate,
+      Object candidateValue) {
     if (candidateValue == null) {
       return;
     }
@@ -414,13 +437,10 @@ private void renderAsList(
             return;
           }
           String key = StrUtil.removePrefix(k, UI_CANDIDATE_ATTRIBUTE_PREFIX);
-          if (key.startsWith("$")){
+          if (key.startsWith("$")) {
             return;
           }
-          setValue(
-              uiCandidate,
-              key,
-              getCandidateValue(ctx, candidateValue, (String) v));
+          setValue(uiCandidate, key, getCandidateValue(ctx, candidateValue, (String) v));
         });
   }
 
@@ -482,13 +502,13 @@ private void renderAsList(
           }
           String property = StrUtil.removePrefix(key, UI_PASS_THROUGH_ATTRIBUTE_PREFIX);
 
-          if (StrUtil.endWith(property, NUMBER_TYPE)){
+          if (StrUtil.endWith(property, NUMBER_TYPE)) {
             property = StrUtil.removeSuffix(property, NUMBER_TYPE);
             setValue(uiElement, property, NumberUtil.parseNumber((String) value));
             return;
           }
 
-          if (StrUtil.endWith(property, BOOL_TYPE)){
+          if (StrUtil.endWith(property, BOOL_TYPE)) {
             property = StrUtil.removeSuffix(property, BOOL_TYPE);
             setValue(uiElement, property, BooleanUtil.toBoolean((String) value));
             return;
@@ -505,7 +525,8 @@ private void renderAsList(
     }
 
     String candidateAction =
-        String.format("prepareCandidatesFor%s", StrUtil.upperFirst((String) pFieldMeta.get("name")));
+        String.format(
+            "prepareCandidatesFor%s", StrUtil.upperFirst((String) pFieldMeta.get("name")));
 
     if (hasCustomized(pCtx, pData, candidateAction)) {
       return invokeCandidateAction(pCtx, pData, candidateAction);
@@ -521,7 +542,8 @@ private void renderAsList(
     return null;
   }
 
-  private boolean hasCustomized(CustomModelUserContextImpl pCtx, Object pData, String pCandidateAction) {
+  private boolean hasCustomized(
+      CustomModelUserContextImpl pCtx, Object pData, String pCandidateAction) {
     Object bean = Beans.getBean(ClassUtil.loadClass(pData.getClass().getName() + "Processor"));
     Method method = ReflectUtil.getMethodOfObj(bean, pCandidateAction, pCtx, pData);
     return method != null;
@@ -533,7 +555,7 @@ private void renderAsList(
   }
 
   public List loadTop(CustomModelUserContextImpl pCtx, PropertyMeta meta) {
-    if(meta == null){
+    if (meta == null) {
       return null;
     }
     Class parentType = meta.getParentType();
@@ -552,7 +574,7 @@ private void renderAsList(
     return getInt(meta, "candidate-limit", 50);
   }
 
-  private <T> T  invokeCandidateAction(
+  private <T> T invokeCandidateAction(
       CustomModelUserContextImpl pCtx, Object pData, String pCandidateAction) {
     Object bean = Beans.getBean(ClassUtil.loadClass(pData.getClass().getName() + "Processor"));
     return ReflectUtil.invoke(bean, pCandidateAction, pCtx, pData);
@@ -604,26 +626,26 @@ private void renderAsList(
 
   private void addFormActions(
       CustomModelUserContextImpl ctx, Object page, EntityMeta meta, Object data) {
-     List<String> actions = getList(meta, "action", ListUtil.empty());
-     actions.forEach(
-         action -> {
-           addValue(page, "actionList", createAction(data, action));
-     });
+    List<String> actions = getList(meta, "action", ListUtil.empty());
+    actions.forEach(
+        action -> {
+          addValue(page, "actionList", createAction(data, action));
+        });
   }
 
   public Map<String, Object> createAction(Object data, String action) {
-      String[] actionDes = action.split(":");
-      String title, code;
-      title = actionDes[0];
-      if (actionDes.length > 1) {
-        code = actionDes[1];
-      } else {
-        code = actionDes[0];
-      }
-      return MapUtil.put("title", title)
-          .put("code", code)
-          .put("linkToUrl", makeActionUrl(code, data))
-          .into_map();
+    String[] actionDes = action.split(":");
+    String title, code;
+    title = actionDes[0];
+    if (actionDes.length > 1) {
+      code = actionDes[1];
+    } else {
+      code = actionDes[0];
+    }
+    return MapUtil.put("title", title)
+        .put("code", code)
+        .put("linkToUrl", makeActionUrl(code, data))
+        .into_map();
   }
 
   public Map<String, Object> buildSelectAction(
@@ -656,69 +678,77 @@ private void renderAsList(
     setValue(page, key, l);
   }
 
-   public String makeActionUrl(String action, Object data) {
-     if(data == null){
-       return String.format("%s/%s/", getBeanName(), action);
-     }else{
-       EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
-       return makeActionUrl(action, entity, data);
-     }
-   }
+  public String makeActionUrl(String action, Object data) {
+    if (data == null) {
+      return String.format("%s/%s/", getBeanName(), action);
+    } else {
+      EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
+      return makeActionUrl(action, entity, data);
+    }
+  }
 
-   public String makeGetActionUrl(CustomModelUserContextImpl ctx, String action, Object data, Map<String, Object> additional) {
-     if (data == null) {
-       return String.format("%s/%s/", getBeanName(), action);
-     } else {
-       EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
-       return makeGetActionUrl(ctx, action, entity, data, additional);
-     }
-   }
+  public String makeGetActionUrl(
+      CustomModelUserContextImpl ctx, String action, Object data, Map<String, Object> additional) {
+    if (data == null) {
+      return String.format("%s/%s/", getBeanName(), action);
+    } else {
+      EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
+      return makeGetActionUrl(ctx, action, entity, data, additional);
+    }
+  }
 
-   public String makeActionUrl(String action, EntityMeta meta, Object data) {
-     if (meta == null){
-       return String.format("%s/%s/", getBeanName(), action);
-     }else{
-       ViewRender bean = Beans.getBean(ClassUtil.loadClass(meta.getType().getName() + "Processor"));
-       return String.format("%s/%s/", bean.getBeanName(), action);
-     }
-   }
+  public String makeActionUrl(String action, EntityMeta meta, Object data) {
+    if (meta == null) {
+      return String.format("%s/%s/", getBeanName(), action);
+    } else {
+      ViewRender bean = Beans.getBean(ClassUtil.loadClass(meta.getType().getName() + "Processor"));
+      return String.format("%s/%s/", bean.getBeanName(), action);
+    }
+  }
 
-   public String makeGetActionUrl(
-         CustomModelUserContextImpl ctx, String action, EntityMeta meta, Object data, Map<String,Object> additional) {
-       if (meta == null) {
-         return String.format("%s/%s/", getBeanName(), action);
-       } else {
-         ViewRender bean = Beans.getBean(ClassUtil.loadClass(meta.getType().getName() + "Processor"));
-         return String.format("%s/%s/%s/", bean.getBeanName(), action + "AsGet", encode(ctx, data, additional));
-       }
-     }
+  public String makeGetActionUrl(
+      CustomModelUserContextImpl ctx,
+      String action,
+      EntityMeta meta,
+      Object data,
+      Map<String, Object> additional) {
+    if (meta == null) {
+      return String.format("%s/%s/", getBeanName(), action);
+    } else {
+      ViewRender bean = Beans.getBean(ClassUtil.loadClass(meta.getType().getName() + "Processor"));
+      return String.format(
+          "%s/%s/%s/", bean.getBeanName(), action + "AsGet", encode(ctx, data, additional));
+    }
+  }
 
-   public String encode(CustomModelUserContextImpl ctx, Object data, Map<String,Object> additional) {
-     if (data == null) {
-       errorMessage("data should not null");
-     }
-     EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
-     Map<String, Object> values = new HashMap<>();
-     for (Map.Entry<String, PropertyMeta> entry : entity.getProperties().entrySet()) {
-       String k = entry.getKey();
-       PropertyMeta v = entry.getValue();
-       Object fieldValue = getFieldValue(data, k, v);
-       if (fieldValue == null) {
-         continue;
-       }
-       Object currentFieldValue = format(ctx, v, fieldValue);
-       values.put(k, currentFieldValue);
-     }
-     values.putAll(additional);
-     return Base64Encoder.encodeUrlSafe(JSONUtil.toJsonStr(values));
-   }
+  public String encode(
+      CustomModelUserContextImpl ctx, Object data, Map<String, Object> additional) {
+    if (data == null) {
+      errorMessage("data should not null");
+    }
+    EntityMeta entity = MetaProvider.entities.get(data.getClass().getName());
+    Map<String, Object> values = new HashMap<>();
+    for (Map.Entry<String, PropertyMeta> entry : entity.getProperties().entrySet()) {
+      String k = entry.getKey();
+      PropertyMeta v = entry.getValue();
+      Object fieldValue = getFieldValue(data, k, v);
+      if (fieldValue == null) {
+        continue;
+      }
+      Object currentFieldValue = format(ctx, v, fieldValue);
+      values.put(k, currentFieldValue);
+    }
+    values.putAll(additional);
+    return Base64Encoder.encodeUrlSafe(JSONUtil.toJsonStr(values));
+  }
 
   private void addPageTitle(
       CustomModelUserContextImpl ctx, Object page, EntityMeta meta, Object data) {
     setValue(page, "pageTitle", getStr(meta, "name", "默认页面"));
   }
 
-  private void addFormId(CustomModelUserContextImpl ctx, Object page, EntityMeta meta, Object data) {
+  private void addFormId(
+      CustomModelUserContextImpl ctx, Object page, EntityMeta meta, Object data) {
     setValue(page, "id", data.getClass());
   }
 
@@ -754,8 +784,8 @@ private void renderAsList(
     return data.getList(UI_ATTRIBUTE_PREFIX + key, defaultValue);
   }
 
-  public static Object getProperty(Object value, String property){
-    if (value == null){
+  public static Object getProperty(Object value, String property) {
+    if (value == null) {
       return null;
     }
     return BeanUtil.getProperty(value, property);
@@ -770,7 +800,7 @@ private void renderAsList(
     addValue(view, "actionList", createAction(ret, action));
   }
 
-  public Object getAction(Object view, String action){
+  public Object getAction(Object view, String action) {
     List actions = BeanUtil.getProperty(view, "actionList");
     if (ObjectUtil.isEmpty(actions)) {
       return null;
@@ -794,7 +824,7 @@ private void renderAsList(
 
   public Object getField(Object view, String name) {
     List groups = BeanUtil.getProperty(view, "groupList");
-    if(ObjectUtil.isEmpty(groups)){
+    if (ObjectUtil.isEmpty(groups)) {
       return new HashMap<>();
     }
     for (Object group : groups) {
@@ -809,8 +839,8 @@ private void renderAsList(
   }
 
   public Object checkAccess(BaseUserContext ctx, String methodName, Object[] parameters)
-          throws IllegalAccessException {
-    return ((CustomModelUserContextImpl)ctx).needLogin();
+      throws IllegalAccessException {
+    return ((CustomModelUserContextImpl) ctx).needLogin();
   }
 
   public Object gotoNextView(BaseEntity currentView, Class<? extends BaseEntity> nextView) {
@@ -826,59 +856,3 @@ private void renderAsList(
     return o;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

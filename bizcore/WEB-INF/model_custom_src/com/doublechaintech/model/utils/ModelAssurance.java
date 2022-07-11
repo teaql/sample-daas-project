@@ -1,4 +1,5 @@
 package com.doublechaintech.model.utils;
+
 import com.doublechaintech.model.ModelUserContext;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,93 +29,34 @@ import com.doublechaintech.model.treenode.TreeNodeTable;
 
 public class ModelAssurance {
 
-    public static Map<String, Object> ensureModelsInDB(ModelUserContext ctx) throws Exception{
-        Map<String, Object> result = new HashMap<>();
-        CommunityTable.ensureTable(ctx, result);
-        FamilyTable.ensureTable(ctx, result);
-        KidTable.ensureTable(ctx, result);
-        MobileAppTable.ensureTable(ctx, result);
-        PageTable.ensureTable(ctx, result);
-        PageTypeTable.ensureTable(ctx, result);
-        SlideTable.ensureTable(ctx, result);
-        UiActionTable.ensureTable(ctx, result);
-        SectionTable.ensureTable(ctx, result);
-        UserDomainTable.ensureTable(ctx, result);
-        UserAllowListTable.ensureTable(ctx, result);
-        SecUserTable.ensureTable(ctx, result);
-        UserAppTable.ensureTable(ctx, result);
-        QuickLinkTable.ensureTable(ctx, result);
-        ListAccessTable.ensureTable(ctx, result);
-        LoginHistoryTable.ensureTable(ctx, result);
-        CandidateContainerTable.ensureTable(ctx, result);
-        CandidateElementTable.ensureTable(ctx, result);
-        WechatWorkappIdentityTable.ensureTable(ctx, result);
-        WechatMiniappIdentityTable.ensureTable(ctx, result);
-        KeyPairIdentityTable.ensureTable(ctx, result);
-        PublicKeyTypeTable.ensureTable(ctx, result);
-        TreeNodeTable.ensureTable(ctx, result);
+  public static Map<String, Object> ensureModelsInDB(ModelUserContext ctx) throws Exception {
+    Map<String, Object> result = new HashMap<>();
+    CommunityTable.ensureTable(ctx, result);
+    FamilyTable.ensureTable(ctx, result);
+    KidTable.ensureTable(ctx, result);
+    MobileAppTable.ensureTable(ctx, result);
+    PageTable.ensureTable(ctx, result);
+    PageTypeTable.ensureTable(ctx, result);
+    SlideTable.ensureTable(ctx, result);
+    UiActionTable.ensureTable(ctx, result);
+    SectionTable.ensureTable(ctx, result);
+    UserDomainTable.ensureTable(ctx, result);
+    UserAllowListTable.ensureTable(ctx, result);
+    SecUserTable.ensureTable(ctx, result);
+    UserAppTable.ensureTable(ctx, result);
+    QuickLinkTable.ensureTable(ctx, result);
+    ListAccessTable.ensureTable(ctx, result);
+    LoginHistoryTable.ensureTable(ctx, result);
+    CandidateContainerTable.ensureTable(ctx, result);
+    CandidateElementTable.ensureTable(ctx, result);
+    WechatWorkappIdentityTable.ensureTable(ctx, result);
+    WechatMiniappIdentityTable.ensureTable(ctx, result);
+    KeyPairIdentityTable.ensureTable(ctx, result);
+    PublicKeyTypeTable.ensureTable(ctx, result);
+    TreeNodeTable.ensureTable(ctx, result);
 
+    PageTypeTable.ensureData(ctx, result);
 
-        PageTypeTable.ensureData(ctx, result);
-
-        return result;
-    }
-
+    return result;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

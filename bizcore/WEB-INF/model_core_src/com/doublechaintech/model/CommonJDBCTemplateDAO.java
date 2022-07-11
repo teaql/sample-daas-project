@@ -1,4 +1,5 @@
 package com.doublechaintech.model;
+
 import com.doublechaintech.model.search.*;
 import static com.doublechaintech.model.search.SqlBuilder.prepareFullDataSql;
 import static com.doublechaintech.model.search.SqlBuilder.prepareParametersAndCondition;
@@ -200,8 +201,8 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity {
         Map<String, Object> params = new HashMap<>();
         params.put("ids", groupValues(results, k));
 
-        //SQLLogger.logDebug("group by sql:" + sql);
-        //logParameters(params);
+        // SQLLogger.logDebug("group by sql:" + sql);
+        // logParameters(params);
         List<Map<String, String>> list =
             Beans.namedParameterJdbcTemplate().query(sql, params, new AggregationGroupByMapper());
         enhanceAggWithGroup(results, list, k);
@@ -301,10 +302,10 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity {
     if (!StrUtil.isEmpty(condition)) {
       sql = sql + " where " + condition;
     }
-    //SQLLogger.logDebug("findAggregation sql:" + sql);
+    // SQLLogger.logDebug("findAggregation sql:" + sql);
     Map<String, Object> refinedParameters = new HashMap<>(parameters);
     refinedParameters.remove(USER_CONTEXT);
-    //logParameters(refinedParameters);
+    // logParameters(refinedParameters);
     return Beans.namedParameterJdbcTemplate().queryForList(sql, refinedParameters, String.class);
   }
 
@@ -438,10 +439,10 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity {
       sql = sql + "\n\t\t GROUP BY " + groupBySelects;
     }
 
-    //SQLLogger.logDebug("aggregate sql:" + sql);
+    // SQLLogger.logDebug("aggregate sql:" + sql);
     Map<String, Object> refinedParameters = new HashMap<>(parameters);
     refinedParameters.remove(USER_CONTEXT);
-    //logParameters(refinedParameters);
+    // logParameters(refinedParameters);
 
     List<AggregationItem> aggregationResults =
         Beans.namedParameterJdbcTemplate()
@@ -1834,19 +1835,3 @@ class CountingResultMap extends HashMap<String, Integer> {
     return value;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

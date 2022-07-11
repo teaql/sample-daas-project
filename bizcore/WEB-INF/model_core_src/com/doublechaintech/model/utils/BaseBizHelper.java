@@ -14,58 +14,62 @@ import com.doublechaintech.model.secuser.SecUserCustomManagerImpl;
 import com.terapico.utils.*;
 
 public class BaseBizHelper {
-	protected CustomModelUserContextImpl userContext;
-	protected static final Map<String, Object> EO = new HashMap<>();
-	protected Map<String, Object> cache;
+  protected CustomModelUserContextImpl userContext;
+  protected static final Map<String, Object> EO = new HashMap<>();
+  protected Map<String, Object> cache;
 
-	public CustomModelUserContextImpl getUserContext() {
-		return userContext;
-	}
-	public void setUserContext(CustomModelUserContextImpl userContext) {
-		this.userContext = userContext;
-	}
+  public CustomModelUserContextImpl getUserContext() {
+    return userContext;
+  }
 
-	protected static <T extends BaseBizHelper> T _OF(CustomModelUserContextImpl ctx, Class<T> clazz) {
-		return _OF(ctx, clazz, false);
-	}
+  public void setUserContext(CustomModelUserContextImpl userContext) {
+    this.userContext = userContext;
+  }
 
-	protected static <T extends BaseBizHelper> T _OF(CustomModelUserContextImpl ctx,
-			Class<T> clazz, boolean forceNew) {
-		String key = "thread_lvl_helper_" + clazz.getName();
-		@SuppressWarnings("unchecked")
-		T t = (T) ctx.getFromContextLocalStorage(key);
-		if (t != null && !forceNew) {
-			return t;
-		}
-		try {
-			t = clazz.newInstance();
-			t.setUserContext(ctx);
-			ctx.putIntoContextLocalStorage(key, t);
-			return t;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+  protected static <T extends BaseBizHelper> T _OF(CustomModelUserContextImpl ctx, Class<T> clazz) {
+    return _OF(ctx, clazz, false);
+  }
 
-	protected <T> T cache(String key, T value) {
-		ensureCache();
-		cache.put(key, value);
-		return value;
-	}
-	protected <T> T cached(String key) {
-		if (cache == null) {
-			return null;
-		}
-		return (T)cache.get(key);
-	}
-	protected <T> T uncache(String key) {
-		if (cache == null) {
-			return null;
-		}
-		return (T)cache.remove(key);
-	}
-	protected <T> T withCache(String key, Callable<T> callable) throws Exception {
+  protected static <T extends BaseBizHelper> T _OF(
+      CustomModelUserContextImpl ctx, Class<T> clazz, boolean forceNew) {
+    String key = "thread_lvl_helper_" + clazz.getName();
+    @SuppressWarnings("unchecked")
+    T t = (T) ctx.getFromContextLocalStorage(key);
+    if (t != null && !forceNew) {
+      return t;
+    }
+    try {
+      t = clazz.newInstance();
+      t.setUserContext(ctx);
+      ctx.putIntoContextLocalStorage(key, t);
+      return t;
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+  }
+
+  protected <T> T cache(String key, T value) {
+    ensureCache();
+    cache.put(key, value);
+    return value;
+  }
+
+  protected <T> T cached(String key) {
+    if (cache == null) {
+      return null;
+    }
+    return (T) cache.get(key);
+  }
+
+  protected <T> T uncache(String key) {
+    if (cache == null) {
+      return null;
+    }
+    return (T) cache.remove(key);
+  }
+
+  protected <T> T withCache(String key, Callable<T> callable) throws Exception {
     T obj = cached(key);
     if (obj != null) {
       return obj;
@@ -73,7 +77,8 @@ public class BaseBizHelper {
     obj = callable.call();
     return cache(key, obj);
   }
-	protected <T> T withCacheNotNull(String key, Callable<T> callable) throws Exception {
+
+  protected <T> T withCacheNotNull(String key, Callable<T> callable) throws Exception {
     T obj = cached(key);
     if (obj != null) {
       return obj;
@@ -92,73 +97,59 @@ public class BaseBizHelper {
     cache(key, obj);
     return obj;
   }
-	protected void ensureCache() {
-		if (cache == null) {
-			cache = new HashMap<>();
-		}
-	}
 
-	public ObjectMapper getObjectMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-		return mapper;
-	}
+  protected void ensureCache() {
+    if (cache == null) {
+      cache = new HashMap<>();
+    }
+  }
 
-	protected void notdone() {
-		throw new UnsupportedOperationException("方法未实现");
-	}
+  public ObjectMapper getObjectMapper() {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+    return mapper;
+  }
 
-  protected void debug(Object format, Object ... params){
-    if (this.getUserContext().isProductEnvironment()){
+  protected void notdone() {
+    throw new UnsupportedOperationException("方法未实现");
+  }
+
+  protected void debug(Object format, Object... params) {
+    if (this.getUserContext().isProductEnvironment()) {
       return;
     }
     String tag = String.format("[DEBUG-%20s]: ", this.getClass().getSimpleName());
-    if(format instanceof String){
-      System.out.println(String.format(tag+format,params));
+    if (format instanceof String) {
+      System.out.println(String.format(tag + format, params));
       return;
     }
     if (format != null) {
-      if (params == null){
+      if (params == null) {
         System.out.println(tag + format);
-      }else{
-        System.out.println(tag + format+", params:" + Arrays.asList(params));
+      } else {
+        System.out.println(tag + format + ", params:" + Arrays.asList(params));
       }
       return;
     }
 
-    if (params == null){
-      System.out.println(tag + " [null]" );
-    }else{
+    if (params == null) {
+      System.out.println(tag + " [null]");
+    } else {
       System.out.println(tag + Arrays.asList(params));
     }
   }
 
-  protected <R> R ifNull(R val, R other){
+  protected <R> R ifNull(R val, R other) {
     return ModelBaseUtils.ifNull(val, other);
   }
-  protected <R> R orNull(Callable<R> callable){
+
+  protected <R> R orNull(Callable<R> callable) {
     return ModelBaseUtils.orNull(callable);
   }
-  protected <R> R orElse(Callable<R> callable, R defaulVal){
+
+  protected <R> R orElse(Callable<R> callable, R defaulVal) {
     return ModelBaseUtils.orElse(callable, defaulVal);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class UserAllowListSmartListExpression<T> extends SmartListExpression<T, UserAllowList> {
+public abstract class UserAllowListSmartListExpression<T>
+    extends SmartListExpression<T, UserAllowList> {
   public UserAllowListExpression<T> first() {
     return new UserAllowListExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class UserAllowListSmartListExpression<T> extends SmartListExpre
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return UserAllowListSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return UserAllowListSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class UserAllowListSmartListExpression<T> extends SmartListExpre
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return UserAllowListSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return UserAllowListSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

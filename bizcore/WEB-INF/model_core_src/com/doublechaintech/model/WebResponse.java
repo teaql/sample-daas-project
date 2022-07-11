@@ -1,7 +1,7 @@
 package com.doublechaintech.model;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class WebResponse {
   private Integer resultCode;
@@ -136,8 +136,3 @@ public class WebResponse {
     this.message = message;
   }
 }
-
-
-
-
-

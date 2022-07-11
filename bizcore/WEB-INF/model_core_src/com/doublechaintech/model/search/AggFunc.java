@@ -1,5 +1,5 @@
-
 package com.doublechaintech.model.search;
+
 import cn.hutool.core.comparator.CompareUtil;
 import cn.hutool.core.util.NumberUtil;
 import com.terapico.utils.TextUtil;
@@ -45,12 +45,16 @@ public enum AggFunc implements SqlFunction {
         "_" + retName);
   }
 
-  public String simpleSql(String... properties){
-    switch (this){
-      case COUNT: return "count(1)";
-      case MIN: return String.format("min(%s)", properties[0]);
-      case MAX: return String.format("max(%s)", properties[0]);
-      case SUM: return String.format("sum(%s)", properties[0]);
+  public String simpleSql(String... properties) {
+    switch (this) {
+      case COUNT:
+        return "count(1)";
+      case MIN:
+        return String.format("min(%s)", properties[0]);
+      case MAX:
+        return String.format("max(%s)", properties[0]);
+      case SUM:
+        return String.format("sum(%s)", properties[0]);
     }
     throw new com.doublechaintech.model.ErrorMessageException("尚未实现");
   }
@@ -66,5 +70,3 @@ public enum AggFunc implements SqlFunction {
     }
   }
 }
-
-

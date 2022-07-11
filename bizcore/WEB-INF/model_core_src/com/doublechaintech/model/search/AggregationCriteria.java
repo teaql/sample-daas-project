@@ -1,4 +1,5 @@
 package com.doublechaintech.model.search;
+
 import com.doublechaintech.model.Beans;
 
 import cn.hutool.core.collection.CollectionUtil;
@@ -68,7 +69,8 @@ public class AggregationCriteria implements SearchCriteria {
 
     String where = SqlBuilder.prepareParametersAndCondition(subRequest, parameters);
     String parentColumn = TextUtil.propertyToColumnName(parentProperty);
-    String sql = String.format("SELECT %s\n\t\t FROM %s", parentColumn, SqlBuilder.tableName(subRequest));
+    String sql =
+        String.format("SELECT %s\n\t\t FROM %s", parentColumn, SqlBuilder.tableName(subRequest));
 
     // where
     if (!ObjectUtil.isEmpty(where)) {
@@ -81,7 +83,8 @@ public class AggregationCriteria implements SearchCriteria {
     String count = refineParameterName(parameters, "count");
 
     // having
-    sql = sql + "\n\t\t HAVING " + aggregationExpression + queryOperator.getOperator() + ":" + count;
+    sql =
+        sql + "\n\t\t HAVING " + aggregationExpression + queryOperator.getOperator() + ":" + count;
     parameters.put(count, value);
     return sql;
   }
@@ -94,25 +97,3 @@ public class AggregationCriteria implements SearchCriteria {
     return SearchConfiguration.MODEL_LOCAL.equals(model);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

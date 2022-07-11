@@ -15,10 +15,10 @@ public abstract class TreeNodeSmartListExpression<T> extends SmartListExpression
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return TreeNodeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return TreeNodeSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,26 +37,10 @@ public abstract class TreeNodeSmartListExpression<T> extends SmartListExpression
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return TreeNodeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return TreeNodeSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

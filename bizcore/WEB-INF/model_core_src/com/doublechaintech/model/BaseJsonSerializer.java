@@ -318,22 +318,3 @@ public abstract class BaseJsonSerializer<T extends BaseEntity> extends JsonSeria
         "The type of " + value.getClass().getName() + " is not handled by writeField");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

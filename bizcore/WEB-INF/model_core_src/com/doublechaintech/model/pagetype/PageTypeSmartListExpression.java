@@ -15,10 +15,10 @@ public abstract class PageTypeSmartListExpression<T> extends SmartListExpression
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return PageTypeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return PageTypeSmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +37,10 @@ public abstract class PageTypeSmartListExpression<T> extends SmartListExpression
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return PageTypeSmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return PageTypeSmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

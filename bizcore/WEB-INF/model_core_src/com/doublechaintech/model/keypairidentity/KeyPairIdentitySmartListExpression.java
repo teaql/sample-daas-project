@@ -6,7 +6,8 @@ import com.doublechaintech.model.expression.SmartListExpression;
 
 import java.util.List;
 
-public abstract class KeyPairIdentitySmartListExpression<T> extends SmartListExpression<T, KeyPairIdentity> {
+public abstract class KeyPairIdentitySmartListExpression<T>
+    extends SmartListExpression<T, KeyPairIdentity> {
   public KeyPairIdentityExpression<T> first() {
     return new KeyPairIdentityExpression<T>() {
       @Override
@@ -15,10 +16,10 @@ public abstract class KeyPairIdentitySmartListExpression<T> extends SmartListExp
         return CollectionUtil.getFirst(list);
       }
 
-       @Override
-       public T $getRoot() {
-         return KeyPairIdentitySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return KeyPairIdentitySmartListExpression.this.$getRoot();
+      }
     };
   }
 
@@ -37,12 +38,10 @@ public abstract class KeyPairIdentitySmartListExpression<T> extends SmartListExp
         return list.get(index);
       }
 
-       @Override
-       public T $getRoot() {
-         return KeyPairIdentitySmartListExpression.this.$getRoot();
-       }
+      @Override
+      public T $getRoot() {
+        return KeyPairIdentitySmartListExpression.this.$getRoot();
+      }
     };
   }
 }
-
-

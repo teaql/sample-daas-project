@@ -49,7 +49,7 @@ public class BaseEntityDeserializer {
       return parseAsObj(pJsonParser, pObjs);
     }
 
-    if (JsonToken.VALUE_NUMBER_INT == jsonToken){
+    if (JsonToken.VALUE_NUMBER_INT == jsonToken) {
       return pObjs.get(pJsonParser.nextLongValue(0));
     }
     // error
@@ -133,7 +133,6 @@ public class BaseEntityDeserializer {
     return parser.getValueAsBoolean();
   }
 
-
   private static double nextFloatValue(PeekableJsonParser parser) throws IOException {
     parser.nextToken();
     return parser.getValueAsDouble();
@@ -207,6 +206,3 @@ public class BaseEntityDeserializer {
     return parser.getLongValue();
   }
 }
-
-
-
