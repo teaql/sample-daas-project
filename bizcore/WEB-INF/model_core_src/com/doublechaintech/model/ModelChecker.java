@@ -99,7 +99,7 @@ public class ModelChecker extends BaseChecker {
 
   public ModelChecker checkNameOfKid(String name) {
 
-    checkStringLengthRange(name, 4, 3, NAME_OF_KID);
+    checkStringLengthRange(name, 2, 10, NAME_OF_KID);
 
     return this;
   }

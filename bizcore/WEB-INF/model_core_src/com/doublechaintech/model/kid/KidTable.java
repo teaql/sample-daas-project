@@ -38,7 +38,7 @@ public class KidTable {
         "kid_data",
         new String[][] {
           new String[] {"id", "varchar(48)", " not null", "ID", "", ""},
-          new String[] {"name", "varchar(3)", "", "名称", "", ""},
+          new String[] {"name", "varchar(10)", "", "名称", "", ""},
           new String[] {"age", "int", "", "年龄", "", ""},
           new String[] {"family", "varchar(48)", "", "家庭", "family_data", "id"},
           new String[] {"version", "int", "", "版本", "", ""}

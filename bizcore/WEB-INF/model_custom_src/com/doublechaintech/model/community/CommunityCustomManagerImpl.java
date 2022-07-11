@@ -41,9 +41,12 @@ import java.util.Map;
 import javax.script.*;
 
 import cn.hutool.script.ScriptUtil;
+import com.doublechaintech.model.ModelBaseUtils;
 import com.doublechaintech.model.SmartList;
 import com.doublechaintech.model.WebResponse;
+import com.doublechaintech.model.expression.E;
 import com.doublechaintech.model.family.Family;
+import com.doublechaintech.model.kid.Kid;
 import com.terapico.uccaf.BaseUserContext;
 import com.doublechaintech.model.ModelUserContext;
 import com.doublechaintech.model.search.*;
@@ -110,6 +113,23 @@ public class CommunityCustomManagerImpl extends CommunityManagerImpl{
         return WebResponse.fromSmartList(Q.family().filterByName("Mia's Family0001").selectKidList(
                 Q.kidWithIdField().selectName().selectAge().orderByAgeAscending()
                         .filterByName(QueryOperator.BEGIN_WITH,"T")).executeForList(userContext));
+
+    }
+    public WebResponse helloChangeKidAge(ModelUserContext userContext, String name, int newAge) throws Exception {
+
+
+        Kid kid = Q.kid().filterByName(name).execute(userContext);
+
+        if(E.kid(kid).eval()==null){
+            return WebResponse.fail("could not found kid with name "+name);
+        }
+        kid.updateAge(newAge);
+        ModelBaseUtils.saveItem(userContext,kid);
+
+
+        return WebResponse.success();
+
+
 
     }
     public WebResponse helloMia001Family3(ModelUserContext userContext) throws Exception {
