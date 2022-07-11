@@ -185,6 +185,18 @@ public class CommunityCustomManagerImpl extends CommunityManagerImpl{
 
 
     }
+    public Object helloScriptHutoolQ(ModelUserContext userContext) throws Exception {
+
+        ScriptUtil.eval("print('Script test!');");
+
+        Map<String,Object> p=new HashMap<>();
+        p.put("p1",1);
+        return ScriptUtil.invoke(
+                "var Q=Java.type(\"com.doublechaintech.model.search.Q\"); hello = function(userContext) { return Q.kid().filterByName('Tom').executeForList(userContext); }",
+                "hello",userContext);
+
+
+    }
 
 
 
